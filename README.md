@@ -33,7 +33,8 @@ This plugin leverages functionality from three community plugins:
 It is recommended that your vault contains at least one "Inbox" folder for new files and a "Work In Progress" folder for items requiring attention. These folder names are customizable and are specified within the plugin settings.
 
 Example : 
-![PersOsReadme01.png](./assets/images/PersOsReadme01.png)
+
+![PersOsReadme01.png](./assets/images/PersOSReadme01.png)
 
 #### Inbox Folders
 
@@ -53,6 +54,7 @@ The plugin uses 2 major properties in your files, we advise using the core obsid
 - **"Handled By" Property**: (Optional) Text property linking to another file.
 
 Here is an example : 
+
 ![PersOsReadme02.png](./assets/images/PersOsReadme02.png)
 #### Rules for "Work in progress" files:
 
@@ -124,6 +126,7 @@ The command uses a very specific algorithm to prioritize files to bring to your 
 It is possible to configure "Random Events" tags in the settings. 
 
 ![PersOsReadme03.png](./assets/images/PersOsReadme03.png)
+
 The start work feature has a 10% chance to bring a random file from those random events. 
 
 
@@ -158,10 +161,12 @@ For example this task :
 ![PersOsReadme06.png](./assets/images/PersOsReadme06.png)
 
 Will become like this : 
-![PersOsReadme07.png](./assets/images/PersOsReadme07.png)
+
+![PersOsReadme07.png](./assets/images/PersOSReadme07.png)
 
 And this task : 
-![PersOsReadme08.png](./assets/images/PersOsReadme08.png)
+
+![PersOsReadme08.png](./assets/images/PersOSReadme08.png)
 
 Will become like this : 
 
