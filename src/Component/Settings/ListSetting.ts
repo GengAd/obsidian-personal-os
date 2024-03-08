@@ -43,8 +43,9 @@ class AddModal extends Modal{
             </h1>
             <input id="input" type="text" placeholder="Enter the element to add">
             <button id="add">Add</button>`;
-        const input = contentEl.querySelector("#input") as HTMLInputElement;
-        const add = contentEl.querySelector("#add") as HTMLButtonElement;
+        contentEl.createEl('h1', {text: 'Add element'});
+        const input = contentEl.createEl('input', {attr: {type: 'text', placeholder: 'Enter the element to add'}});
+        const add = contentEl.createEl('button', {text: 'Add'});
         const saveElement = () => {
             this.callback(input.value);
             this.close();
