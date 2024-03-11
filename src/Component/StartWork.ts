@@ -1,7 +1,7 @@
 import { getAPI } from 'obsidian-dataview';
 import { sortTimes, fileNotArchived, IsDueTime, IsDueDayWithoutTime, IsDueDayButNotTime, IsNextPage } from '../Tools/Utils';
 import { parseTags } from '../Tools/Utils';
-import { App, Notice, moment, TFolder } from 'obsidian';
+import { App, Notice, moment, TFolder, TFile } from 'obsidian';
 import ContextGraph from './ContextGraph';
 export default class StartWork{
     app: App;
@@ -50,10 +50,10 @@ export default class StartWork{
                 this.setFocus(this.listOfFilesDueWithout);
             }else if(this.dueDay != moment().format('YYYY-MM-DD') && this.graph.office.where(fileNotArchived).where(IsDueDayButNotTime).length == 0){
                 this.dueDay = moment().format('YYYY-MM-DD');
-                const donePage = this.app.vault.getMarkdownFiles().find(p=>p.path==`${this.configFolder}Due Done.md`);
+                const donePage = this.app.vault.getAbstractFileByPath(`${this.configFolder}Due Done.md`);
                 if(!donePage){
                     await this.app.vault.create(`${this.configFolder}Due Done.md`, `- [x] Dues done ✅ ${this.dueDay}\n`);
-                }else{
+                }else if(donePage instanceof TFile){
                     this.app.vault.process(donePage, (content)=> `- [x] Dues done ✅ ${this.dueDay}\n` + content);
                 }
                 this.currentFile = this.dv.page(`${this.configFolder}Due Done.md`)!;
@@ -63,10 +63,10 @@ export default class StartWork{
                     this.setFocus(this.listOfFilesNext);
                 }else if(this.nextDay != moment().format('YYYY-MM-DD')){
                     this.nextDay = moment().format('YYYY-MM-DD')
-                    const donePage = this.app.vault.getMarkdownFiles().find(p=>p.path==`${this.configFolder}Done.md`)!;
+                    const donePage = this.app.vault.getAbstractFileByPath(`${this.configFolder}Done.md`)!;
                     if(!donePage){
                         await this.app.vault.create(`${this.configFolder}Done.md`, `- [x] Nexts done ✅ ${this.nextDay}\n`);
-                    }else{
+                    }else if(donePage instanceof TFile){
                         this.app.vault.process(donePage, (content)=> `- [x] Nexts done ✅ ${this.nextDay}\n` + content);
                     }
                     this.currentFile = this.dv.page(`${this.configFolder}Done.md`)!;

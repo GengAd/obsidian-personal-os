@@ -3,7 +3,8 @@ import SettingTab from './SettingsTab';
 import ListItemSetting from './ListItemSetting';
 export default class ListSetting {
     constructor(settings: SettingTab, saveSettings: () => void, update: (list: string[]) => void, div: HTMLElement, list: string[], name: string, desc: string) {
-        div.createEl('h3', {text: name});
+        new Setting(div).setName(name).setHeading();
+        //div.createEl('h3', {text: name});
         new Setting(div)
             .setName(`Add ${name}`)
             .setDesc(desc)

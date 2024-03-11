@@ -1,6 +1,6 @@
 import { getAPI } from 'obsidian-dataview';
 import { isLate, isOpenNoTask,isNotArchived,fileNotArchived } from '../Tools/Utils';
-import { App, moment, TFolder } from 'obsidian';
+import { App, moment, TFolder, TFile } from 'obsidian';
 import ContextGraph from './ContextGraph';
 export default class StartProcess{
     app: App;
@@ -39,11 +39,11 @@ export default class StartProcess{
             path = openNoTask[Math.floor(Math.random() * length)].file.path;
         }
         if(path === ''){
-            let donePage = this.app.vault.getMarkdownFiles().find(p=>p.path==`${this.configFolder}Process Done.md`);
+            let donePage = this.app.vault.getAbstractFileByPath(`${this.configFolder}Process Done.md`);
             const done = `- [x] Done ✅ ${moment().format('YYYY-MM-DD')}\n`;
             if(!donePage){
                 donePage = await this.app.vault.create(`${this.configFolder}Process Done.md`, done);
-            }else if(!(await this.app.vault.cachedRead(donePage)).includes(done, 0))
+            }else if(donePage instanceof TFile && !(await this.app.vault.cachedRead(donePage)).includes(done, 0))
                 this.app.vault.process(donePage, (content)=> done + content);
             path = donePage.path;
         }
