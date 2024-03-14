@@ -28,49 +28,49 @@ export default class PersonalOS extends Plugin {
 	loadCommands = () =>{
 		this.addCommand({
 			id:"start-work",
-			name:"Start Work",
+			name:"Start work",
 			callback:()=>{
 				this.startWork.findNextFile();
 			}
 		});
 		this.addCommand({
 			id:"start-process",
-			name:"Start Process",
+			name:"Start process",
 			callback:()=>{
 				this.startProcess.findNextFile();
 			}
 		});
 		this.addCommand({
 			id:"set-focus",
-			name:"Set Focus",
+			name:"Set focus",
 			callback:()=>{
 				this.startWork.setManuallyFocus();
 			}
 		});
 		this.addCommand({
 			id:"reload-graph",
-			name:"Reload Graph",
+			name:"Reload graph",
 			callback: ()=>{
 				this.graph.reload();
 			}
 		});
 		this.addCommand({
-			id:"fail-tasks",
-			name:"Auto Fail Current File",
+			id:"auto-fail-tasks",
+			name:"Auto fail current file",
 			callback: ()=>{
 				this.taskFailer.failTask();
 			}
 		});
 		this.addCommand({
-			id:"auto-fail-tasks",
-			name:"Auto Fail Work in Progress Files",
+			id:"auto-fail-wip-tasks",
+			name:"Auto fail work in progress files",
 			callback: ()=>{
 				this.taskFailer.autoFailVaultTask();
 			}
 		});
 		this.addCommand({
 			id:"snooze-tasks",
-			name:"Snooze Tasks",
+			name:"Snooze tasks",
 			callback:()=>{
 				new SnoozeModal(this.app).open();
 			}

@@ -15,8 +15,9 @@ export default class TaskFailer {
     }
     autoFailVaultTask = async () => {
         for(let task of this.graph.office.file.tasks.where(isTaskFailed)){
-            const file = this.app.vault.getMarkdownFiles().find(f => f.path == task.path);
-            this.failTask(file);
+            const file = this.app.vault.getAbstractFileByPath(task.path);
+            if(file instanceof TFile)
+                this.failTask(file);
         }
     }
     failTask = async (file?: TFile) =>{

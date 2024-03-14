@@ -3,7 +3,8 @@ import SettingTab from './SettingsTab';
 import ListItemSetting from './ListItemSetting';
 export default class ListSetting {
     constructor(settings: SettingTab, saveSettings: () => void, update: (list: string[]) => void, div: HTMLElement, list: string[], name: string, desc: string) {
-        div.createEl('h3', {text: name});
+        new Setting(div).setName(name).setHeading();
+        //div.createEl('h3', {text: name});
         new Setting(div)
             .setName(`Add ${name}`)
             .setDesc(desc)
@@ -37,14 +38,9 @@ class AddModal extends Modal{
 	onOpen() {
 		const { contentEl } = this;
         contentEl.empty();
-        contentEl.innerHTML = `
-            <h1>
-                Add element
-            </h1>
-            <input id="input" type="text" placeholder="Enter the element to add">
-            <button id="add">Add</button>`;
-        const input = contentEl.querySelector("#input") as HTMLInputElement;
-        const add = contentEl.querySelector("#add") as HTMLButtonElement;
+        contentEl.createEl('h1', {text: 'Add element'});
+        const input = contentEl.createEl('input', {attr: {type: 'text', placeholder: 'Enter the element to add'}});
+        const add = contentEl.createEl('button', {text: 'Add'});
         const saveElement = () => {
             this.callback(input.value);
             this.close();

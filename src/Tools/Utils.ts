@@ -85,7 +85,7 @@ const isLate = (p: any) =>
         .where(
             (t: any) =>
             (t.due && moment(t.due.ts).isBefore(moment(), 'day')) ||
-            (t.scheduled && moment(t.scheduled).isBefore(moment(), 'day'))
+            (t.scheduled && moment(t.scheduled.ts).isBefore(moment(), 'day'))
         ).length > 0;
 const isOpenNoTask = (p: any) => 
     p.file.tasks
@@ -186,7 +186,7 @@ export {createProxyForRender, setState};
 const getRandomTime = (startDate: moment.Moment, endDate: moment.Moment) => {
     const timeDiff = endDate.diff(startDate, 'days');
     const randomTime = Math.random() * timeDiff;
-    const randomDate = moment(startDate).add(randomTime, 'days');
+    const randomDate = startDate.add(randomTime, 'days');
 
     return randomDate.format('YYYY-MM-DD');
 }

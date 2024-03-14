@@ -49,16 +49,14 @@ export default class PersonalOSSettings extends PluginSettingTab {
 	display(): void {
 		const {containerEl} = this;
 		containerEl.empty();
-		const button = containerEl.createEl('button', {text: 'Buy me a coffee ❤️'});
-		containerEl.createEl('h1', {text: 'Folders'});
 		new ListSetting(this, this.saveSettings, (list: string[])=>this.inboxPages=list, containerEl.createEl('div'), this.inboxPages,
-			'Inbox folders', 'enter the path of your inbox folders');
+			'Inbox folders', 'Enter the path of your inbox folders');
 		new ListSetting(this, this.saveSettings, (list: string[])=>this.officePages=list, containerEl.createEl('div'), this.officePages,
-			'Work in Progress folders', 'enter the path of your office folders');
-		containerEl.createEl('h3', {text: 'Config Folder'});
+			'Work in Progress folders', 'Enter the path of your work in progress folders');
+		new Setting(containerEl).setName('Config folder').setHeading();
 		new StringSetting(containerEl, this.saveSettings, (value: string) => this.configFolder = value, 
-			'Config folder', 'enter the path of your config folder', this.configFolder, 'Leave empty to set as root');
-		new ListSetting(this, this.saveSettings,(list: string[])=>this.randomEvents=list, containerEl.createEl('div'), this.randomEvents, 'Start Work random events',
+			'Config folder', 'Enter the path of your config folder', this.configFolder, 'Leave empty to set as root');
+		new ListSetting(this, this.saveSettings,(list: string[])=>this.randomEvents=list, containerEl.createEl('div'), this.randomEvents, 'Start work random events',
 			'Add a new tag for random event');
 		new Setting(containerEl)
 				.setName('Probability of random events')
@@ -69,6 +67,7 @@ export default class PersonalOSSettings extends PluginSettingTab {
 						this.probabilityRandomEvents = parseInt(value) || 0;
 						this.saveSettings();
 					}));
+		const button = containerEl.createEl('button', {text: 'Buy me a coffee ❤️'});
 		button.setAttr('style', `
 			background-color: #4CAF50; 
 			border: none;
