@@ -1,5 +1,3 @@
-
-
 # Obsidian Personal OS
 
 ## Introduction
