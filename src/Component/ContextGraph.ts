@@ -13,7 +13,7 @@ export default class ContextGraph extends Graph{
         this.app = app;
         this.dv = getAPI(app);
         
-        setTimeout(() => {this.reload(true, officePages),3000});
+        setTimeout(() => {this.reload(true, officePages)},3000);
     }
 
     setOfficePages = (officePages: string[]) => {
@@ -32,7 +32,7 @@ export default class ContextGraph extends Graph{
             }
         });
         if(again)
-            setTimeout(() => {this.reload(true),5*60*1000});
+            setTimeout(() => {this.reload(true)},5*60*1000);
 
     }
     getParents = (node: string, parents: string[] = []): string[] =>{

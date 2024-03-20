@@ -35,14 +35,23 @@ export default class TaskFailer {
                         const nextDueDate = moment(task.dueDate);
                         const nextScheduledDate = task.scheduledDate ? moment(task.scheduledDate) : undefined;
                         const nextStartDate = task.startDate ? moment(task.startDate) : undefined;
-                        nextDueDate.add(task.reccuringNumber, task.reccuringType+"s" as moment.unitOfTime.DurationConstructor);
+                        if(task.reccuringType === "weekday"){
+                            if(nextDueDate.day() === 5) task.reccuringNumber = 3;
+                        }
+                        nextDueDate.add(task.reccuringNumber, task.reccuringType.replace("weekday","day")+"s" as moment.unitOfTime.DurationConstructor);
                         tempTask = tempTask.replace(task.dueDate, nextDueDate.format("YYYY-MM-DD"));
                         if(nextScheduledDate){ 
-                            nextScheduledDate.add(task.reccuringNumber, task.reccuringType+"s" as moment.unitOfTime.DurationConstructor);
+                            if(task.reccuringType === "weekday"){
+                                if(nextScheduledDate.day() === 5) task.reccuringNumber = 3;
+                            }
+                            nextScheduledDate.add(task.reccuringNumber, task.reccuringType.replace("weekday","day")+"s" as moment.unitOfTime.DurationConstructor);
                             tempTask = tempTask.replace(task.scheduledDate!, nextScheduledDate.format("YYYY-MM-DD"));
                         }
                         if(nextStartDate){
-                             nextStartDate.add(task.reccuringNumber, task.reccuringType+"s" as moment.unitOfTime.DurationConstructor);
+                            if(task.reccuringType === "weekday"){
+                                if(nextStartDate.day() === 5) task.reccuringNumber = 3;
+                            }
+                            nextStartDate.add(task.reccuringNumber, task.reccuringType.replace("weekday","day")+"s" as moment.unitOfTime.DurationConstructor);
                              tempTask = tempTask.replace(task.startDate!, nextStartDate.format("YYYY-MM-DD"));
                         }
                         updatedTask = `${tempTask}\n${updatedTask}`;

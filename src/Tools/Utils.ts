@@ -116,7 +116,7 @@ const parseTasks = (input: string) =>{
 
 const parseTasksToCancel = (input: string) =>{
     const autoRegex = /- \[[ ]\] (.*?)(?=\n|$)/g;
-    const reccuringRegex = /🔁 every (\d*\s)?(day|week|month|year)( on)?/;
+    const reccuringRegex = /🔁 every (\d*\s)?(day|weekday|week|month|year)( on)?/;
     const datesRegex = /(🛫|📅|⏳)\s*(\d{4}-\d{2}-\d{2})/g;
     const result: {task: string, startDate?: string, dueDate?:string, scheduledDate?:string, reccuringType:string, reccuringNumber: number}[] = [];
     for(let match of input.matchAll(autoRegex)){
