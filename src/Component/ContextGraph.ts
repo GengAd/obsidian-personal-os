@@ -13,14 +13,14 @@ export default class ContextGraph extends Graph{
         this.app = app;
         this.dv = getAPI(app);
         
-        setTimeout(() => {this.reload(true, officePages)},3000);
+        setTimeout(() => {this.reload(officePages)},3000);
     }
 
     setOfficePages = (officePages: string[]) => {
         const filteredPages = officePages.filter(p=>this.app.vault.getAbstractFileByPath(p) instanceof TFolder);
         this.officePages = filteredPages.length > 0 ? filteredPages : ["/"];
     }
-    reload = (again: boolean = false, officePages?: string[]) =>{
+    reload = (officePages?: string[]) =>{
         this.clear();
         if(officePages) this.setOfficePages(officePages);
         this.office = this.dv.pages(`${this.officePages.map(el => `"${el}"`).join(' or ')}`);
@@ -31,8 +31,6 @@ export default class ContextGraph extends Graph{
                 if(!this.hasEdge(p.context.path,p.file.path))this.addEdge(p.context.path, p.file.path);
             }
         });
-        if(again)
-            setTimeout(() => {this.reload(true)},5*60*1000);
 
     }
     getParents = (node: string, parents: string[] = []): string[] =>{

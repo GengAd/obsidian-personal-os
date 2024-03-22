@@ -42,6 +42,7 @@ export default class StartWork{
         this.focus = this.dv.page(this.app.workspace.getActiveFile()!.path);
     }
     findNextFile = async () =>{
+        this.graph.reload();
         new Notice('⚔️');
         this.listOfFilesWTime = this.graph.office.where(fileNotArchived).where(IsDueTime);
         if(this.listOfFilesWTime.length == 0){
@@ -129,16 +130,13 @@ export default class StartWork{
     }
     openCurrentFile = async () =>{
         if(this.currentFile){
-            let newTab = false;
             //@ts-ignore
             if(this.currentFile.workspace && this.app.internalPlugins.getPluginById('workspaces').instance.workspaces[this.currentFile.workspace] ){
-                let fileWorkspace = this.currentFile.workspace
                 //@ts-ignore
-                await this.app.workspace.changeLayout(this.app.internalPlugins.getPluginById('workspaces').instance.workspaces[fileWorkspace])
-                newTab = true;
+                await this.app.internalPlugins.getPluginById('workspaces').instance.loadWorkspace(this.currentFile.workspace)
             }
             else {
-                this.app.workspace.openLinkText(this.currentFile.file.path, this.currentFile.file.path, newTab);
+                this.app.workspace.openLinkText(this.currentFile.file.path, this.currentFile.file.path, false);
             }
         }
     }

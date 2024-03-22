@@ -14,6 +14,7 @@ export default class TaskFailer {
         this.dv = getAPI(app);
     }
     autoFailVaultTask = async () => {
+        this.graph.reload();
         for(let task of this.graph.office.file.tasks.where(isTaskFailed)){
             const file = this.app.vault.getAbstractFileByPath(task.path);
             if(file instanceof TFile)
