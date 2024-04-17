@@ -27,6 +27,7 @@ export default class StartProcess{
             this.configFolder += '/';
     }
     findNextFile = async () =>{
+        this.graph.reload();
         const late = this.graph.office.where(fileNotArchived).where(isLate).limit(3);
         const inbox = this.inboxPages ? this.dv.pages(`${this.inboxPages.map(el => `"${el}"`).join(' or ')}`).sort((p: any) => p.file.mtime,'asc').limit(3) : [];
         const openNoTask = this.graph.office.where(isNotArchived).where(isOpenNoTask).sort ((p: any) => p.file.mtime,'asc').limit(3);

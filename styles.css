@@ -127,3 +127,31 @@ If your plugin does not need CSS, delete this file.
   0% {transform: translateY(0) rotate(0deg);}
   100% {transform: translateY(100px) rotate(360deg);}
 }
+
+/* credits to heliostatic from https://github.com/heliostatic/completed-task-display */
+.hide-finished-tasks .markdown-preview-view ul > li.is-checked[data-task="x"],
+.hide-finished-tasks .markdown-preview-view ul > li.is-checked[data-task="-"],
+.hide-finished-tasks .markdown-preview-view ul > li.is-checked[data-task-status-type="DONE"],
+.hide-finished-tasks .markdown-preview-view ul > li.is-checked[data-task-status-type="CANCELLED"],
+.hide-finished-tasks .markdown-source-view .HyperMD-task-line[data-task="x"],
+.hide-finished-tasks .markdown-source-view .HyperMD-task-line[data-task="-"],
+.hide-finished-tasks .markdown-source-view .HyperMD-task-line[data-task-status-type="DONE"],
+.hide-finished-tasks .markdown-source-view .HyperMD-task-line[data-task-status-type="CANCELLED"] {
+  display: none;
+}
+
+.markdown-preview-view [data-task="-"] input,
+.markdown-preview-view [data-task-status-type="CANCELLED"] input,
+.markdown-source-view input[data-task="-"],
+.markdown-source-view input[data-task-status-type="CANCELLED"] {
+  background-color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.markdown-preview-view [data-task="-"] input:hover,
+.markdown-preview-view [data-task-status-type="CANCELLED"] input:hover,
+.markdown-source-view input[data-task="-"]:hover,
+.markdown-source-view input[data-task-status-type="CANCELLED"]:hover {
+  background-color: var(--color-red);
+  border-color: var(--color-red);
+}

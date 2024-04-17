@@ -13,7 +13,9 @@ export default class PersonalOS extends Plugin {
 	startProcess: StartProcess;
 	graph: ContextGraph;
 	taskFailer: TaskFailer;
+	hideTasks: boolean;
 	async onload(){	
+		this.hideTasks = false;
 		this.app.workspace.onLayoutReady(async () => {
 			this.settings = new PersonalOSSettings(this.app, this);
 			await this.settings.loadSettings();
@@ -75,5 +77,13 @@ export default class PersonalOS extends Plugin {
 				new SnoozeModal(this.app).open();
 			}
 		});
+		this.addCommand({
+			id:"toggle-task-hider",
+			name:"Toggle task hider",
+			callback:()=>{
+				this.hideTasks = !this.hideTasks;
+				document.body.toggleClass('hide-finished-tasks', this.hideTasks);
+			}
+		})
 	}
 }
