@@ -18,14 +18,16 @@ const sortTimes = (a: any, b:any) => getEarlierTimeTask(a.file.tasks).localeComp
 const setPriority = (p:any, t:any) =>{
     const {text} = t;
     const priority = p.priority || 0;
-    if(text.includes("🔺") && priority < 4)
-        p.priority = 4;
-    else if(text.includes("⏫") && priority < 3)
+    if(text.includes("🔺") && priority < 3)
         p.priority = 3;
-    else if(text.includes("🔼") && priority < 2)
+    else if(text.includes("⏫") && priority < 2)
         p.priority = 2;
-    else if(text.includes("🔽") && priority < 1)
+    else if(text.includes("🔼") && priority < 1)
         p.priority = 1;
+    else if(text.includes("🔽") && priority <= 0)
+        p.priority = -1;
+    else if(text.includes("⏬") && priority === 0)
+        p.priority = -2;
     else
         p.priority = 0;
     return true;
@@ -192,3 +194,10 @@ const getRandomTime = (startDate: moment.Moment, endDate: moment.Moment) => {
 }
 
 export {getRandomTime};
+
+const createSVGAndLink = (linkDiv:HTMLDivElement, href: string, svg: string, text: string) => {
+    const link = linkDiv.createEl('a', { href });
+    link.setAttr('style', 'display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;');
+    link.innerHTML = `${svg}<br>${text}`;
+};
+export {createSVGAndLink};

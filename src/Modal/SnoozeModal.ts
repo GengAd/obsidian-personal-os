@@ -43,7 +43,7 @@ export default class SnoozeModal extends FuzzySuggestModal<SnoozeOptions> {
         const date = getRandomTime(startDate, endDate);
         this.app.vault.process(this.app.workspace.getActiveFile()!, (content: string) => {
             const taskRegex = /- \[[ ]\] (.*?)(?=\n|$)/g;
-            const dateRegex = /(🛫|⏳)\s*(\d{4}-\d{2}-\d{2})/g;
+            const dateRegex = /(🛫|⏳|📅)\s*(\d{4}-\d{2}-\d{2})/g;
             let newContent = content;
             for(const match of newContent.matchAll(taskRegex)){
                 const task = match[0];

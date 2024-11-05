@@ -41,11 +41,11 @@ export default class StartProcess{
         }
         if(path === ''){
             let donePage = this.app.vault.getAbstractFileByPath(`${this.configFolder}Process Done.md`);
-            const done = `- [x] Done ✅ ${moment().format('YYYY-MM-DD')}\n`;
+            const done = `\n- [x] Done ✅ ${moment().format('YYYY-MM-DD')}`;
             if(!donePage){
                 donePage = await this.app.vault.create(`${this.configFolder}Process Done.md`, done);
             }else if(donePage instanceof TFile && !(await this.app.vault.cachedRead(donePage)).includes(done, 0))
-                this.app.vault.process(donePage, (content)=> done + content);
+                this.app.vault.process(donePage, (content)=> content+done);
             path = donePage.path;
         }
         this.app.workspace.openLinkText(path, path, false);

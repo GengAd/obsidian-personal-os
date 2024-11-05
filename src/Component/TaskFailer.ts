@@ -21,14 +21,19 @@ export default class TaskFailer {
                 this.failTask(file);
         }
     }
-    failTask = async (file?: TFile) =>{
+    failTask = async (file?: TFile | null, failToday?: boolean) =>{
         if(!file) file = this.app.workspace.getActiveFile()!;
         let hasReccuringTasks = false;
         await this.app.vault.process(file, (fileContent: string)=>{
             const fileTasks = parseTasksToCancel(fileContent);
             const today = moment().set({hour:0,minute:0,second:0,millisecond:0});
             for(let task of fileTasks){
-                if(task.dueDate && moment(task.dueDate).isBefore(today)){
+                let isBefore;
+                if(failToday)
+                    isBefore = moment(task.dueDate).isSameOrBefore(today);
+                else
+                    isBefore = moment(task.dueDate).isBefore(today)
+                if(task.dueDate && isBefore){
                     let updatedTask = task.task.replace('[ ]', '[-]') + ` ❌ ${task.dueDate}`;
                     let tempTask = task.task;
                     if(task.reccuringType != "none"){
@@ -66,7 +71,7 @@ export default class TaskFailer {
             }
             return fileContent;
         });
-        if(hasReccuringTasks) this.failTask(file);
+        if(hasReccuringTasks) this.failTask(file, failToday);
     }
     
 }
