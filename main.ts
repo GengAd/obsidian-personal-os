@@ -1,4 +1,4 @@
-import { Notice, Plugin, moment } from 'obsidian';
+import { Plugin, MarkdownView } from 'obsidian';
 import PersonalOSSettings from './src/Component/Settings/SettingsTab';
 import Engage from 'src/Component/Engage';
 import EngageCurrentFile from 'src/Component/EngageCurrentFile';
@@ -10,6 +10,9 @@ import SnoozeModal from 'src/Modal/SnoozeModal';
 import RandomSnoozeModal from 'src/Modal/RandomSnoozeModal';
 import ChangelogModal from 'src/Modal/ChangelogModal';
 import ProgressBar from 'src/Component/ProgressBar';
+import Calendar from 'src/Component/Calendar';
+import Timeline from 'src/Component/Timeline';
+import POSVaultFunctions from 'src/Tools/POSVaultFunctions';
 
 
 export default class PersonalOS extends Plugin {
@@ -21,12 +24,15 @@ export default class PersonalOS extends Plugin {
 	taskFailer: TaskFailer;
 	hideTasks: boolean;
 	xpFeedback: XpFeedback | null;
+	functions: POSVaultFunctions;
 	async onload(){	
-        customElements.define('progress-bar', ProgressBar);
+		if(customElements.get('progress-bar') == null)
+        	customElements.define('progress-bar', ProgressBar);
 		this.hideTasks = false;
 		this.app.workspace.onLayoutReady(async () => {
 			this.settings = new PersonalOSSettings(this.app, this);
 			await this.settings.loadSettings();
+			this.functions = new POSVaultFunctions(this.app, this.settings.configFolder);
 			this.addSettingTab(this.settings);
 			this.checkForUpdate();
 			this.graph = new ContextGraph(this.app, this.settings.officePages, {multi:true, type:"mixed", allowSelfLoops:true});
@@ -38,6 +44,40 @@ export default class PersonalOS extends Plugin {
 				this.xpFeedback = new XpFeedback(this.app);
 				this.registerEvent(this.app.metadataCache.on('changed', this.xpFeedback.displayXpEarned));
 			}
+			this.registerMarkdownCodeBlockProcessor("Calendar", (source, el, ctx) => {
+				// Parse the source to extract parameters
+					const lines = source.split('\n');
+					const input: {[name: string]: string} = {};
+					const regex = /^\s*(\w+)\s*:\s*(.*)$/;
+					lines.forEach(line => {
+						const match = line.match(regex);
+						if (match) {
+							const key = match[1].trim();
+							const value = match[2].trim();
+							input[key] = value;
+						}
+					});
+					el.parentElement?.classList.remove('markdown-rendered');
+				// Create a new Calendar instance and call displayCalendar
+				new Calendar(this.app).displayCalendar(input, el.createEl('div'));
+			});
+			this.registerMarkdownCodeBlockProcessor("Taskido", (source, el, ctx) => {
+				// Parse the source to extract parameters
+					const lines = source.split('\n');
+					const input: {[name: string]: string} = {};
+					const regex = /^\s*(\w+)\s*:\s*(.*)$/;
+					lines.forEach(line => {
+						const match = line.match(regex);
+						if (match) {
+							const key = match[1].trim();
+							const value = match[2].trim();
+							input[key] = value;
+						}
+					});
+					el.parentElement?.classList.remove('markdown-rendered');
+				// Create a new Calendar instance and call displayCalendar
+				new Timeline(this.app).createTimeline(input, el.createEl('div'));
+			});
 			this.loadCommands();
 		});
 	}
@@ -50,6 +90,7 @@ export default class PersonalOS extends Plugin {
 			this.xpFeedback = null;
 		}
 	}
+
 	loadCommands = () =>{
 		this.addCommand({
 			id:"start-work",
@@ -102,26 +143,45 @@ export default class PersonalOS extends Plugin {
 		});
 		this.addCommand({
 			id:"snooze-tasks",
-			name:"Snooze tasks",
+			name:"Delay file dates",
 			callback:()=>{
 				new SnoozeModal(this.app).open();
 			}
 		});
 		this.addCommand({
 			id:"random-snooze-tasks",
-			name:"Random snooze tasks",
+			name:"Generate delayed date",
 			callback:()=>{
 				new RandomSnoozeModal(this.app).open();
 			}
 		});
 		this.addCommand({
 			id:"toggle-task-hider",
-			name:"Toggle task hider",
+			name:"Toggle actions hider",
 			callback:()=>{
 				this.hideTasks = !this.hideTasks;
 				document.body.toggleClass('hide-finished-tasks', this.hideTasks);
+				if(this.hideTasks)
+					document.body.toggleClass('no-animation', true);
+					requestAnimationFrame(() =>{
+						document.body.toggleClass('no-animation', false);
+					});
 			}
 		});
+		
+		this.addCommand({
+			id:"insert-time-emoji",
+			name:"Insert time emoji",
+			callback:()=>{
+				const activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					const editor = activeView.editor;
+					const cursor = editor.getCursor();
+					editor.replaceRange('⌚', cursor);
+					editor.setCursor({ line: cursor.line, ch: cursor.ch + 1 });
+				}
+			}
+		})
 	}
 	checkForUpdate = () => {
 		if(this.settings.enableChangelog && this.manifest.version != this.settings.currentVersion){

@@ -52,6 +52,7 @@ export default class PersonalOSSettings extends PluginSettingTab {
 		this.plugin.graph.setOfficePages(this.officePages);
 		this.plugin.startProcess.setInboxPages(this.inboxPages);
 		this.plugin.startProcess.setConfigFolder(this.configFolder);
+		this.plugin.functions.setConfigFolder(this.configFolder);
 		this.plugin.engage.setConfigFolder(this.configFolder);
 		this.plugin.engage.setTags(this.randomEvents);
 		this.plugin.engage.setProbabilityRandomEvent(this.probabilityRandomEvents);
@@ -77,7 +78,7 @@ export default class PersonalOSSettings extends PluginSettingTab {
 		);
 		createSVGAndLink(
 			links,
-			'https://personal-os.wktmty.com/',
+			'https://pers-os.com/',
 			`<svg width="48px" height="48px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M232 64L280 64 280 214 277 270 300 242 356 189 388 221 256 353 124 221 156 189 212 242 235 270 232 214 232 64ZM64 400L448 400 448 448 64 448 64 400Z"/></svg>`,
 			'Download vault template'
 		);

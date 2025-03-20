@@ -44,7 +44,9 @@ export default class RandomSnoozeModal extends FuzzySuggestModal<RandomSnoozeOpt
         if (activeView) {
             const editor = activeView.editor;
             const cursor = editor.getCursor();
-            editor.replaceRange(getRandomTime(startDate, endDate).format('YYYY-MM-DD'), cursor);
+            const date = getRandomTime(startDate, endDate).format('YYYY-MM-DD');
+            editor.replaceRange(date, cursor);
+            editor.setCursor({ line: cursor.line, ch: cursor.ch + date.length });
         }
     }
 }

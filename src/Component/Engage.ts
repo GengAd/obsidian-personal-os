@@ -1,11 +1,11 @@
-import { getAPI } from 'obsidian-dataview';
+import { getAPI, DataviewApi } from 'obsidian-dataview';
 import { sortTimes, fileNotArchived, IsDueTime, IsDueDayWithoutTime, IsDueDayButNotTime, IsNextPage } from '../Tools/Utils';
 import { parseTags } from '../Tools/Utils';
 import { App, Notice, moment, TFolder, TFile, Platform } from 'obsidian';
 import ContextGraph from './ContextGraph';
 export default class Engage{
     app: App;
-    dv: any;
+    dv: DataviewApi;
     listOfFilesWTime: any;
     listOfFilesDueWithout: any;
     listOfFilesNext: any;
@@ -78,6 +78,8 @@ export default class Engage{
                         await this.app.vault.create(`${this.configFolder}Wait.md`, ``);
                     this.currentFile = this.dv.page(`${this.configFolder}Wait.md`)!;
                     this.focus = this.dv.page(`${this.configFolder}Wait.md`)!;
+                }else {
+                    this.currentFile = this.dv.page(`${this.configFolder}Done.md`)!;
                 }
             }
         }else{

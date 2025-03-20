@@ -1,6 +1,7 @@
 import { moment } from "obsidian";
+import { RRule } from "rrule";
 
-const getTime = (timeString : string) =>{
+const  getTime = (timeString : string) =>{
     const time = timeString.match(/⌚(\d{2}:\d{2})/);
     if(time && time[1])
         return time![1];
@@ -48,21 +49,21 @@ const isNotArchived = (p:any) => !p.Archived;
 const IsDueTime = (p:any) =>
     p.file.tasks
         .where(isNotCompletedOrCancelled)
-        .where(IsTodayTask)
+        .where(isTodayTask)
         .where(isTimeBeforeCurrentTime)
         .where((t:any) => setPriority(p,t))
         .length >0;
-const IsTodayTask = (t: any) => (t.due && moment(t.due.ts).isSame(moment(), 'day') || (t.scheduled && moment(t.scheduled.ts).isSame(moment(), 'day')));
+const isTodayTask = (t: any) => (t.due && moment(t.due.ts).isSame(moment(), 'day') || (t.scheduled && moment(t.scheduled.ts).isSame(moment(), 'day')));
 const IsDueDayWithoutTime = (p:any) =>
     p.file.tasks
         .where(isNotCompletedOrCancelled)
         .where((t:any) => !hasTimeFormat(t))
-        .where(IsTodayTask)
+        .where(isTodayTask)
         .where((t:any) => setPriority(p,t))
         .length > 0;
 const IsDueDayButNotTime = (p:any) =>
         p.file.tasks
-          .where(IsTodayTask)
+          .where(isTodayTask)
           .where(isNotCompletedOrCancelled)
           .where((t:any) => hasTimeFormat(t) && !isTimeBeforeCurrentTime(t))
           .length > 0;
@@ -95,7 +96,7 @@ const isOpenNoTask = (p: any) =>
         .length == 0;
 const isTaskFailed = (t: any) =>
     isNotCompletedOrCancelled(t) && t.due && (moment(t.due.ts).isBefore(moment(), 'day'))
-export {sortTimes, fileNotArchived, IsDueTime, IsDueDayWithoutTime,IsDueDayButNotTime, IsNextPage, isNotCompletedOrCancelled, isLate, isOpenNoTask, isNotArchived, isTaskFailed};
+export {getTime, sortTimes, fileNotArchived, IsDueTime, IsDueDayWithoutTime,IsDueDayButNotTime, IsNextPage, isNotCompletedOrCancelled, isLate, isOpenNoTask, isNotArchived, isTaskFailed, isTodayTask, isTimeBeforeCurrentTime, hasTimeFormat};
 
 const parseTasks = (input: string) =>{
     const calendarRegex = /\[x\] (.*?) ✅ (\d{4}-\d{2}-\d{2}) (.*?) \[\[(.*?)\]\]/g;
@@ -118,16 +119,16 @@ const parseTasks = (input: string) =>{
 
 const parseTasksToCancel = (input: string) =>{
     const autoRegex = /- \[[ ]\] (.*?)(?=\n|$)/g;
-    const reccuringRegex = /🔁 every (\d*\s)?(day|weekday|week|month|year)( on)?/;
+    const reccuringRegex = /🔁\s*(.*?)\s*[🛫⏳📅⌚]/;
     const datesRegex = /(🛫|📅|⏳)\s*(\d{4}-\d{2}-\d{2})/g;
-    const result: {task: string, startDate?: string, dueDate?:string, scheduledDate?:string, reccuringType:string, reccuringNumber: number}[] = [];
+    const result: {task: string, startDate?: string, dueDate?:string, scheduledDate?:string, rrules: {[key:string]: RRule}}[] = [];
     for(let match of input.matchAll(autoRegex)){
         const task = match[0];
         const dates = task.match(datesRegex);
-        let reccuringNumber = 1;
         let startDate = "";
         let dueDate = "";
         let scheduledDate = "";
+        let rrules: {[key:string]: RRule} = {};
         if(dates && dates.length > 0){
             for(let date of dates){
                 if(date.includes("🛫"))
@@ -139,9 +140,29 @@ const parseTasksToCancel = (input: string) =>{
             }
         }
         const recuringMatch = task.match(reccuringRegex);
-        const reccuringType = recuringMatch && !recuringMatch[3]? recuringMatch[2] : "none";
-        reccuringNumber = recuringMatch && recuringMatch[1] ? parseInt(recuringMatch[1].trim()) : 1;
-        result.push({task,startDate,dueDate,scheduledDate,reccuringType, reccuringNumber});
+        const recurringValue = recuringMatch ? recuringMatch[1] : "";
+        if(recurringValue != ""){
+            const options = RRule.fromText(recurringValue).origOptions;
+            if(startDate){
+                rrules.start = new RRule({
+                    ...options,
+                    dtstart: moment.utc(startDate).toDate()
+                });
+            }
+            if(dueDate){
+                rrules.due = new RRule({
+                    ...options,
+                    dtstart: moment.utc(dueDate).toDate()
+                });
+            }
+            if(scheduledDate){
+                rrules.scheduled = new RRule({
+                    ...options,
+                    dtstart: moment.utc(scheduledDate).toDate()
+                });
+            }
+        }
+        result.push({task,startDate,dueDate,scheduledDate,rrules});
     }
     return result;
 }
@@ -187,10 +208,9 @@ export {createProxyForRender, setState};
 
 const getRandomTime = (startDate: moment.Moment, endDate: moment.Moment) => {
     const timeDiff = endDate.diff(startDate, 'days');
-    const randomTime = Math.random() * timeDiff;
-    const randomDate = startDate.add(randomTime, 'days');
+    const randomTime = Math.floor(Math.random() * timeDiff) + 1;
 
-    return randomDate.format('YYYY-MM-DD');
+    return startDate.add(randomTime, 'days');
 }
 
 export {getRandomTime};
@@ -201,3 +221,86 @@ const createSVGAndLink = (linkDiv:HTMLDivElement, href: string, svg: string, tex
     link.innerHTML = `${svg}<br>${text}`;
 };
 export {createSVGAndLink};
+
+/**
+ * This code is inspired from the work of 702573N https://github.com/702573N/Obsidian-Tasks-Calendar
+ */
+const getFilename = (path: string): string | undefined  => 
+    (path.match(/^(?:.*\/)?([^\/]+?|)(?=(?:\.[^\/.]*)?$)/)||[])[1];
+const momentToRegex = (momentFormat: string) : string => {
+	momentFormat = momentFormat.replaceAll(".", "\\.");
+	momentFormat = momentFormat.replaceAll(",", "\\,");
+	momentFormat = momentFormat.replaceAll("-", "\\-");
+	momentFormat = momentFormat.replaceAll(":", "\\:");
+	momentFormat = momentFormat.replaceAll(" ", "\\s");
+	
+	momentFormat = momentFormat.replace("dddd", "\\w{1,}");
+	momentFormat = momentFormat.replace("ddd", "\\w{1,3}");
+	momentFormat = momentFormat.replace("dd", "\\w{2}");
+	momentFormat = momentFormat.replace("d", "\\d{1}");
+	
+	momentFormat = momentFormat.replace("YYYY", "\\d{4}");
+	momentFormat = momentFormat.replace("YY", "\\d{2}");
+	
+	momentFormat = momentFormat.replace("MMMM", "\\w{1,}");
+	momentFormat = momentFormat.replace("MMM", "\\w{3}");
+	momentFormat = momentFormat.replace("MM", "\\d{2}");
+	
+	momentFormat = momentFormat.replace("DDDD", "\\d{3}");
+	momentFormat = momentFormat.replace("DDD", "\\d{1,3}");
+	momentFormat = momentFormat.replace("DD", "\\d{2}");
+	momentFormat = momentFormat.replace("D", "\\d{1,2}");
+	
+	momentFormat = momentFormat.replace("ww", "\\d{1,2}");
+
+	return `/^(${momentFormat})$/`;
+}
+
+const getMetaFromNote = (task: any, metaName: string, dv: any) => 
+    dv.pages(`"${task.link.path}"`)[metaName][0] || "";
+
+const IsRecurringThisDay = (task: any, date: any)=>{
+    if(!task.recurringValue)
+        return false;
+    if(moment(date).isBefore(task.moment, 'day'))
+        return false;
+    try{
+        let rule = new RRule({
+            ...RRule.fromText(task.recurringValue).origOptions,
+            dtstart: task.moment.clone().set("hour",12).toDate()
+        });
+        let startOfDay = moment(date).startOf("day").toDate();
+        let endOfDay = moment(date).endOf("day").toDate();
+        let occurrences = rule.between(startOfDay, endOfDay);
+        return occurrences.length > 0;
+    }catch(e){
+        return false;
+    }
+    
+}
+
+
+const isDueOrScheduled = (task: any) =>
+    isNotCompletedOrCancelled(task) && (task.due || task.scheduled);
+const isTime = (task: any) =>
+    isNotCompletedOrCancelled(task) && hasTimeFormat(task) && isDueOrScheduled(task);
+
+const isTimePassed = (task: any) =>
+    isNotCompletedOrCancelled(task) && isTodayTask(task) && isTimeBeforeCurrentTime(task);
+
+const sortTasks = (a: any, b: any, date: any) =>{
+    if(a.type == "time" && b.type != "timePassed" && b.type != "time" && !moment(date).isSame(moment(), 'day')){
+        return 2 - b.typePriority;
+    }
+    if(b.type == "time" && a.type != "timePassed" && a.type != "time" && !moment(date).isSame(moment(), 'day')){
+        return a.typePriority - 2;
+    }
+    if(a.typePriority != b.typePriority && !(((a.type == "timePassed" && b.type == "time") || (b.type == "timePassed" && a.type == "time")) && !moment(date).isSame(moment(), 'day'))){
+        return a.typePriority - b.typePriority;
+    }
+    if(a.type == "time" || a.type == "timePassed"){
+        return a.moment.diff(b.moment);
+    }
+    return a.priority - b.priority;
+}
+export {getFilename, momentToRegex, getMetaFromNote, IsRecurringThisDay, isDueOrScheduled, isTime, isTimePassed, sortTasks};

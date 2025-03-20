@@ -1,9 +1,10 @@
-import { getAPI } from 'obsidian-dataview';
-import { sortTimes, isNotArchived, IsDueTime, IsDueDayWithoutTime, IsNextPage } from '../Tools/Utils';
+import { getAPI, DataviewApi } from 'obsidian-dataview';
+import { sortTimes, isNotArchived, IsDueTime, IsDueDayWithoutTime, IsNextPage, isLate } from '../Tools/Utils';
 import { App, Notice} from 'obsidian';
 export default class EngageCurrentFile{
     app: App;
-    dv: any;
+    dv: DataviewApi;
+    listOfLateFiles: any;
     listOfFilesWTime: any;
     listOfFilesDueWithout: any;
     listOfFilesNext: any;
@@ -13,27 +14,33 @@ export default class EngageCurrentFile{
     constructor(app: App){
         this.app = app;
         this.dv = getAPI(app);
+        this.focus = null;
     }
     findNextFile = async () =>{
         this.setFocus();
-        this.listOfFilesWTime = this.listOfChildFiles.where(isNotArchived).where(IsDueTime);
-        if(this.listOfFilesWTime.length == 0){
-            this.listOfFilesDueWithout = this.listOfChildFiles.where(isNotArchived).where(IsDueDayWithoutTime);
-            this.listOfFilesNext = this.listOfChildFiles.where(isNotArchived).where(IsNextPage);
-            if(this.listOfFilesDueWithout.length > 0){
-                this.setCurrentFile(this.listOfFilesDueWithout);
-            }else if(this.listOfFilesNext.length > 0){
-                this.setCurrentFile(this.listOfFilesNext);
+        if((this.listOfLateFiles = this.listOfChildFiles.where(isNotArchived).where(isLate)).length > 0){
+            this.setCurrentFile(this.listOfLateFiles);
+        }else {
+            if((this.listOfFilesWTime = this.listOfChildFiles.where(isNotArchived).where(IsDueTime)).length == 0){
+                if((this.listOfFilesDueWithout = this.listOfChildFiles.where(isNotArchived).where(IsDueDayWithoutTime)).length > 0){
+                    this.setCurrentFile(this.listOfFilesDueWithout);
+                }else if((this.listOfFilesNext = this.listOfChildFiles.where(isNotArchived).where(IsNextPage)).length > 0){
+                    this.setCurrentFile(this.listOfFilesNext);
+                }
+            }else if(this.listOfFilesWTime.length > 1){
+                    this.listOfFilesWTime.values.sort(sortTimes);
+                    this.currentFile = this.listOfFilesWTime[0];   
+            }else {
+                this.currentFile = this.listOfFilesWTime[0];
             }
-        }else if(this.listOfFilesWTime.length > 1){
-                this.listOfFilesWTime.values.sort(sortTimes);
-                this.currentFile = this.listOfFilesWTime[0];   
         }
         this.openCurrentFile();
     }
     setFocus = () =>{
-        if(!this.focus || this.dv.page(this.app.workspace.getActiveFile()?.path)['Handled By']?.path != this.focus.file.path)
-            this.app.workspace.getActiveFile() ? this.focus = this.dv.page(this.app.workspace.getActiveFile()!.path) : null;
+        if(this.dv.pages().where((p:any)=> p['Handled By']?.path == this.app.workspace.getActiveFile()?.path && !p.Archived).length > 0)
+            this.focus = this.dv.page(this.app.workspace.getActiveFile()!.path);
+        if(!this.focus && this.dv.page(this.app.workspace.getActiveFile()?.path)['Handled By'])
+            this.focus = this.dv.page(this.dv.page(this.app.workspace.getActiveFile()?.path)['Handled By'].path);
         if(this.focus)
             this.listOfChildFiles = this.dv.pages().where((p:any)=>p['Handled By']?.path == this.focus.file.path);
     }

@@ -1,9 +1,9 @@
-import { getAPI } from 'obsidian-dataview';
+import { getAPI, DataviewApi } from 'obsidian-dataview';
 import { parseTasks } from 'src/Tools/Utils';
-import { App, Notice, TFile, Plugin} from 'obsidian';
+import { App, Notice, TFile } from 'obsidian';
 export default class XpFeedback{
     app: App;
-    dv: any;
+    dv: DataviewApi;
     currentFile: TFile | null;
     currentFileContent: string;
     constructor(app: App){

@@ -1,0 +1,54 @@
+@use 'calendar';
+@use 'timeline';
+@use 'variables' as *;
+
+.max-width {
+    display: flex;
+    flex-grow: 1;
+    max-width: 100%;
+
+    div div:first-child {
+        max-width: 80%;
+        overflow: hidden;
+    }
+}
+
+@keyframes confetti {
+  0% {transform: translateY(0) rotate(0deg);}
+  100% {transform: translateY(100px) rotate(360deg);}
+}
+
+
+.no-animation * {
+  animation: none !important;
+  transition: none !important;
+}
+/* credits to heliostatic from https://github.com/heliostatic/completed-task-display */
+.hide-finished-tasks {
+    .markdown-preview-view ul > li.is-checked[data-task="x"],
+    .markdown-preview-view ul > li.is-checked[data-task="-"],
+    .markdown-preview-view ul > li.is-checked[data-task-status-type="DONE"],
+    .markdown-preview-view ul > li.is-checked[data-task-status-type="CANCELLED"],
+    .markdown-source-view .HyperMD-task-line[data-task="x"],
+    .markdown-source-view .HyperMD-task-line[data-task="-"],
+    .markdown-source-view .HyperMD-task-line[data-task-status-type="DONE"],
+    .markdown-source-view .HyperMD-task-line[data-task-status-type="CANCELLED"] {
+      display: none;
+    }
+}
+
+.markdown-preview-view [data-task="-"] input,
+.markdown-preview-view [data-task-status-type="CANCELLED"] input,
+.markdown-source-view input[data-task="-"],
+.markdown-source-view input[data-task-status-type="CANCELLED"] {
+  background-color: $color-red;
+  border-color: $color-red;
+}
+
+.markdown-preview-view [data-task="-"] input:hover,
+.markdown-preview-view [data-task-status-type="CANCELLED"] input:hover,
+.markdown-source-view input[data-task="-"]:hover,
+.markdown-source-view input[data-task-status-type="CANCELLED"]:hover {
+  background-color: $color-red;
+  border-color: $color-red;
+}

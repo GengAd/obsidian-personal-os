@@ -1,11 +1,11 @@
 import { App, TFolder } from 'obsidian';
-import { getAPI } from 'obsidian-dataview';
+import { getAPI, DataviewApi } from 'obsidian-dataview';
 import Graph from 'graphology';
 import { GraphOptions } from 'graphology-types';
 
 export default class ContextGraph extends Graph{
     app: App;
-    dv: any;
+    dv: DataviewApi;
     officePages: string[];
     office: any;
     constructor(app: App, officePages: string[], options?: GraphOptions){

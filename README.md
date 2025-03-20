@@ -3,7 +3,7 @@
 # Obsidian Personal OS
 
 <br>
-<div style="display: flex; justify-content: space-between; width: 100%;"><a href="https://github.com/GengAd/obsidian-personal-os" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"><svg width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg><br>Ask anything on Github</a><a href="https://discord.gg/5Eq79HdbT4" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"><svg width="48px" height="48px" viewBox="-1.5 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="m13.93 11.4c-.054.633-.582 1.127-1.224 1.127-.678 0-1.229-.55-1.229-1.229s.55-1.229 1.228-1.229c.683.029 1.225.59 1.225 1.277 0 .019 0 .037-.001.056v-.003zm-5.604-1.33c-.688.061-1.223.634-1.223 1.332s.535 1.271 1.218 1.332h.005c.683-.029 1.225-.59 1.225-1.277 0-.019 0-.037-.001-.056v.003c.001-.02.002-.043.002-.067 0-.685-.541-1.243-1.219-1.269h-.002zm12.674-7.598v21.528c-3.023-2.672-2.057-1.787-5.568-5.052l.636 2.22h-13.609c-1.359-.004-2.46-1.106-2.46-2.466 0-.002 0-.004 0-.006v-16.224c0-.002 0-.004 0-.006 0-1.36 1.101-2.462 2.459-2.466h16.081c1.359.004 2.46 1.106 2.46 2.466v.006zm-3.42 11.376c-.042-2.559-.676-4.96-1.77-7.086l.042.09c-.924-.731-2.088-1.195-3.358-1.259l-.014-.001-.168.192c1.15.312 2.15.837 3.002 1.535l-.014-.011c-1.399-.769-3.066-1.222-4.839-1.222-1.493 0-2.911.321-4.189.898l.064-.026c-.444.204-.708.35-.708.35.884-.722 1.942-1.266 3.1-1.56l.056-.012-.12-.144c-1.284.065-2.448.529-3.384 1.269l.012-.009c-1.052 2.036-1.686 4.437-1.728 6.982v.014c.799 1.111 2.088 1.826 3.543 1.826.041 0 .082-.001.123-.002h-.006s.444-.54.804-.996c-.866-.223-1.592-.727-2.093-1.406l-.007-.01c.176.124.468.284.49.3 1.209.672 2.652 1.067 4.188 1.067 1.191 0 2.326-.238 3.36-.668l-.058.021c.528-.202.982-.44 1.404-.723l-.025.016c-.526.703-1.277 1.212-2.144 1.423l-.026.005c.36.456.792.972.792.972.033.001.072.001.111.001 1.461 0 2.755-.714 3.552-1.813l.009-.013z"></path></svg><br>Join Discord server</a><a href="https://personal-os.wktmty.com/" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"><svg width="48px" height="48px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M232 64L280 64 280 214 277 270 300 242 356 189 388 221 256 353 124 221 156 189 212 242 235 270 232 214 232 64ZM64 400L448 400 448 448 64 448 64 400Z"></path></svg><br>Download vault template</a></div>
+<div style="display: flex; justify-content: space-between; width: 100%;"><a href="https://github.com/GengAd/obsidian-personal-os" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"><svg width="48px" height="48px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg><br>Ask anything on Github</a><a href="https://discord.gg/5Eq79HdbT4" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"><svg width="48px" height="48px" viewBox="-1.5 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"><path d="m13.93 11.4c-.054.633-.582 1.127-1.224 1.127-.678 0-1.229-.55-1.229-1.229s.55-1.229 1.228-1.229c.683.029 1.225.59 1.225 1.277 0 .019 0 .037-.001.056v-.003zm-5.604-1.33c-.688.061-1.223.634-1.223 1.332s.535 1.271 1.218 1.332h.005c.683-.029 1.225-.59 1.225-1.277 0-.019 0-.037-.001-.056v.003c.001-.02.002-.043.002-.067 0-.685-.541-1.243-1.219-1.269h-.002zm12.674-7.598v21.528c-3.023-2.672-2.057-1.787-5.568-5.052l.636 2.22h-13.609c-1.359-.004-2.46-1.106-2.46-2.466 0-.002 0-.004 0-.006v-16.224c0-.002 0-.004 0-.006 0-1.36 1.101-2.462 2.459-2.466h16.081c1.359.004 2.46 1.106 2.46 2.466v.006zm-3.42 11.376c-.042-2.559-.676-4.96-1.77-7.086l.042.09c-.924-.731-2.088-1.195-3.358-1.259l-.014-.001-.168.192c1.15.312 2.15.837 3.002 1.535l-.014-.011c-1.399-.769-3.066-1.222-4.839-1.222-1.493 0-2.911.321-4.189.898l.064-.026c-.444.204-.708.35-.708.35.884-.722 1.942-1.266 3.1-1.56l.056-.012-.12-.144c-1.284.065-2.448.529-3.384 1.269l.012-.009c-1.052 2.036-1.686 4.437-1.728 6.982v.014c.799 1.111 2.088 1.826 3.543 1.826.041 0 .082-.001.123-.002h-.006s.444-.54.804-.996c-.866-.223-1.592-.727-2.093-1.406l-.007-.01c.176.124.468.284.49.3 1.209.672 2.652 1.067 4.188 1.067 1.191 0 2.326-.238 3.36-.668l-.058.021c.528-.202.982-.44 1.404-.723l-.025.016c-.526.703-1.277 1.212-2.144 1.423l-.026.005c.36.456.792.972.792.972.033.001.072.001.111.001 1.461 0 2.755-.714 3.552-1.813l.009-.013z"></path></svg><br>Join Discord server</a><a href="https://pers-os.com/" style="display: flex; flex-direction: column; align-items: center; text-align: center; width: 100%;"><svg width="48px" height="48px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M232 64L280 64 280 214 277 270 300 242 356 189 388 221 256 353 124 221 156 189 212 242 235 270 232 214 232 64ZM64 400L448 400 448 448 64 448 64 400Z"></path></svg><br>Download vault template</a></div>
 
 ## Introduction
 
@@ -182,8 +182,134 @@ Will become like this :
 
 It's possible to launch the Auto fail task command either in the current file Or in your whole vault. 
 
+### Engage current file command
+Added a command to use the "Engage" algorithm in the context of the current file. Meaning that this algorithm will only look fore files that are  referencing the current file in a "Handled By" property. 
+
+### Add time emoji command
+Added a command to add the "⌚" emoji used to declare time on tasks. 
+
+### Calendar Widget
+Thanks 702573N for providing the baseline for it !
+Check [Obsidian-Tasks-Calendar](https://github.com/702573N/Obsidian-Tasks-Calendar) for more documentation. 
+
+Main change : 
+The calendar widget is now declared in the following form in a "Calendar" code block : 
+````
+```Calendar
+pages: ""
+view: month
+firstDayOfWeek: 1
+options: style1
+```
+````
+
+Instead of  the folowing in a "dataviewjs" code block: 
+````
+```dataviewjs
+await dv.view("9.Archives/z.Obsidian Settings/CalendarView", {pages:"", view: "week", firstDayOfWeek: "1", options: "style4 noProcess noLayer filter"})
+```
+````
+
+#### Added options
+
+##### taskCountOnly
+```
+taskCountOnly: true
+```
+This parameter displays only the number of tasks on each days
+
+##### disableRecurrence
+```
+disableRecurrence: true
+```
+Now you can see the recurring tasks every days they will appear in the future, not only the current day, if you want to disable this new feature set this parameter to `true`
+
+##### hideFileWithProps
+```
+hideFileWithProps: Archived, Handled By
+```
+This filter will remove the tasks that are not checked and present in a file with a mentioned property, as `Archived` or `Handled By` in this example
+
+#### Calendar block example
+````
+```Calendar
+view: week
+firstDayOfWeek: 1
+options: style4 noProcess noLayer filter noDailyNote noCellNameEvent
+pages: "2.Activities"
+hideArchived: true 
+hideHandled: true
+```
+````
+### Timeline Widget
+Thanks 702573N for providing the baseline for it ! 
+Check  [Obsidian-Tasks-Timeline](https://github.com/702573N/Obsidian-Tasks-Timeline) for more documentation
+
+
+Main change : 
+The calendar widget is now declared in the following form in a "Taskido" code block Instead of a "dataviewjs" codeblock : 
+````
+```Taskido
+parameter: "value"
+parameter: "value"
+parameter: true
+parameter: "value value value value"
+```
+````
+
+#### Added options
+
+##### taskCountOnly
+```
+taskCountOnly: true
+```
+This parameter displays only the number of tasks on each days
+
+##### disableRecurrence
+```
+disableRecurrence: true
+```
+Now you can see the recurring tasks every days they will appear in the future, not only the current day, if you want to disable this new feature set this parameter to `true`
+
+##### hideFileWithProps
+```
+hideFileWithProps: Archived, Handled By
+```
+This filter will remove the tasks that are not checked and present in a file with a mentioned property, as `Archived` or `Handled By` in this example
+
+#### numberOfDays
+```
+numberOfDays: 5
+```
+Choose the number of days you want to view in the future in your timeline
+
+#### Timeline block example
+
+````
+```Taskido  
+pages: "2.Activities"  
+disableRecurrence: false  
+hideFileWithProps: Archived, Handled By
+options: noCounters
+options: noQuickEntry
+```
+````
 
 ## Releases 
+### 2.0.0 : Release update 
+
+- Info : 
+	- Changed link to New vault template, you can buy it from the site or find it free in the official Obsidian community ! 
+- New features :
+	- Added Calendar and Timeline supports ! Thanks 702573N !
+	- Added "Engage current file" command 
+	- Added "Clock emoji" command
+- Changes : 
+	- Improved auto-fail using rrule, all types of recurrences managed by the task plugin now work with auto fail ! (try every monday, tuesday for example)
+	- Improved auto delay, now 2 commands are available, one to generate a date, and one to delay "All dates" in the current file. 
+- Bug fix : 
+	- Fixed unexpected behavior on "Done" and "Due done" pages. 
+
 ### 1.1.0 : Release update 
 
 - Info : 

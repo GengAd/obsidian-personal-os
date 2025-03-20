@@ -1,10 +1,10 @@
-import { getAPI } from 'obsidian-dataview';
+import { getAPI, DataviewApi } from 'obsidian-dataview';
 import { isLate, isOpenNoTask,isNotArchived,fileNotArchived } from '../Tools/Utils';
 import { App, moment, TFolder, TFile } from 'obsidian';
 import ContextGraph from './ContextGraph';
 export default class StartProcess{
     app: App;
-    dv: any;
+    dv: DataviewApi;
     graph: ContextGraph;
     inboxPages: string[] | undefined;
     configFolder: string;
