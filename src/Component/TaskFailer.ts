@@ -38,17 +38,29 @@ export default class TaskFailer {
                     let tempTask = task.task;
                     if(Object.keys(task.rrules).length > 0){
                         hasReccuringTasks = true;
-                        const nextDueDate = task.dueDate ? moment(task.rrules.due.after(moment.utc(task.dueDate).toDate())) : undefined;
-                        const nextScheduledDate = task.scheduledDate ? moment(task.rrules.scheduled.after(moment.utc(task.scheduledDate).toDate())) : undefined;
-                        const nextStartDate = task.startDate ? moment(task.rrules.start.after(moment.utc(task.startDate).toDate())) : undefined;
+                        const nextDueDate = task.dueDate ? moment(task.rrules.due.after(moment(task.dueDate).toDate())) : undefined;
+                        const nextScheduledDate = task.scheduledDate ? moment(task.rrules.scheduled.after(moment(task.scheduledDate).toDate())) : undefined;
+                        const nextStartDate = task.startDate ? moment(task.rrules.start.after(moment(task.startDate).toDate())) : undefined;
                         if(nextDueDate){
-                            tempTask = tempTask.replace(task.dueDate!, nextDueDate.format("YYYY-MM-DD"));
+                            if(nextDueDate.isAfter(moment(task.dueDate))){
+                                tempTask = tempTask.replace(task.dueDate!, nextDueDate.format("YYYY-MM-DD"));
+                            }else{
+                                hasReccuringTasks = false;
+                            }
                         }
                         if(nextScheduledDate){ 
-                            tempTask = tempTask.replace(task.scheduledDate!, nextScheduledDate.format("YYYY-MM-DD"));
+                            if(nextScheduledDate.isAfter(moment(task.scheduledDate))){
+                                tempTask = tempTask.replace(task.scheduledDate!, nextScheduledDate.format("YYYY-MM-DD"));
+                            }else{
+                                hasReccuringTasks = false;
+                            }
                         }
                         if(nextStartDate){
-                            tempTask = tempTask.replace(task.startDate!, nextStartDate.format("YYYY-MM-DD"));
+                            if(nextStartDate.isAfter(moment(task.startDate))){
+                                tempTask = tempTask.replace(task.startDate!, nextStartDate.format("YYYY-MM-DD"));
+                            }else{
+                                hasReccuringTasks = false;
+                            }
                         }
                         updatedTask = `${tempTask}\n${updatedTask}`;
                     }else{

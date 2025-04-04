@@ -146,19 +146,19 @@ const parseTasksToCancel = (input: string) =>{
             if(startDate){
                 rrules.start = new RRule({
                     ...options,
-                    dtstart: moment.utc(startDate).toDate()
+                    dtstart: moment(startDate).toDate()
                 });
             }
             if(dueDate){
                 rrules.due = new RRule({
                     ...options,
-                    dtstart: moment.utc(dueDate).toDate()
+                    dtstart: moment(dueDate).toDate()
                 });
             }
             if(scheduledDate){
                 rrules.scheduled = new RRule({
                     ...options,
-                    dtstart: moment.utc(scheduledDate).toDate()
+                    dtstart: moment(scheduledDate).toDate()
                 });
             }
         }
