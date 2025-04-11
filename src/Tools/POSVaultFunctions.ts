@@ -3,6 +3,7 @@
  */
 import { App, TFile, TFolder } from 'obsidian';
 import { getAPI, DataviewApi } from 'obsidian-dataview';
+import { calculateTotalPoints, currentLevelBasedOnXp, totalXpToTargetLevel, xpForNextLevel } from 'src/Tools/Utils';
 
 export default class POSVaultFunctions {
     app: App;
@@ -334,5 +335,33 @@ actions:
                 }
             }
         }
+    }
+
+    getTotalXP = () => 
+        calculateTotalPoints(this.dv)
+
+    getCurrentLevel = () => 
+        Math.floor(currentLevelBasedOnXp(calculateTotalPoints(this.dv),2,2))
+    
+
+    getXPProgressBar = (dv: any) => {        
+        const {differencialXp, xpRequired} = this.getCurrentLevelXP();
+        dv.paragraph(  
+            dv.el("progress-bar", "", { attr: {value: Math.round((differencialXp / xpRequired) * 100), style:"width=50%;"}}) 
+        )  
+        dv.paragraph(`<p>${differencialXp} / ${xpRequired} xp</p>`);
+        
+    }
+
+    getCurrentLevelXP = () => {
+        const x=2;
+        const y=2;
+        const points = calculateTotalPoints(this.dv);
+        const level = Math.floor(currentLevelBasedOnXp(points,x,y));
+        const neededXp = Math.floor(totalXpToTargetLevel(level,x,y));
+        const xpRequired = Math.ceil(xpForNextLevel(level,x,y));
+        const differencialXp = points - neededXp;
+
+        return {differencialXp, xpRequired, level};
     }
 }

@@ -304,3 +304,49 @@ const sortTasks = (a: any, b: any, date: any) =>{
     return a.priority - b.priority;
 }
 export {getFilename, momentToRegex, getMetaFromNote, IsRecurringThisDay, isDueOrScheduled, isTime, isTimePassed, sortTasks};
+
+/** POSVaultFunctions tools */
+
+const calculatePagePoints = (page: any) =>{
+    const calculateTaskPoints = (task: any, pageMulti: number) =>
+        10 * (task['✳️'] !== undefined ? task['✳️'] : 1) * pageMulti;
+    // Only default to 1 if page['✳️'] is undefined
+    const pageMulti = page['✳️'] !== undefined ? page['✳️'] : 1;
+    return page.file.tasks
+        .where((t: any) => t.completed && t.fullyCompleted)
+        .values.reduce(
+            (acc: number, task: any) => acc + calculateTaskPoints(task, pageMulti), 0
+        );
+}
+
+const calculateTotalPoints = (dv: any) => 
+    dv.pages().values.reduce(
+            (acc: number, page: any) => acc + calculatePagePoints(page), 0
+        )
+
+const currentLevelBasedOnXp = (totalXp: number, x: number, y: number) => {
+    let level = 0;
+    let xpNeeded = 0;
+    
+    while (xpNeeded <= totalXp) {
+        level++;
+        xpNeeded += Math.pow(x * level, y);
+    }
+    
+    // Subtract 1 because it increments level one time too many in the loop
+    return level - 1;
+}
+        
+const xpForNextLevel = (currentLevel: number, x: number, y: number) =>
+    Math.pow(x * (currentLevel + 1), y)
+
+
+        
+const totalXpToTargetLevel = (targetLevel: number, x: number, y: number) => {
+    let totalXp = 0;
+    for (let level = 1; level <= targetLevel; level++) {
+        totalXp += Math.pow(x * level, y);
+    }
+    return totalXp;
+}
+export {calculatePagePoints, calculateTotalPoints, currentLevelBasedOnXp, xpForNextLevel, totalXpToTargetLevel};
