@@ -17,6 +17,7 @@
 	2. Dashboards
 	3. Tutorial Mission Arc
 	4. Workspaces
+	5. Plugins
 4. Activities and Actions
 5. Knowledge Management
 	1. Competences
