@@ -1,1 +1,0 @@
-# Setting the Avatar Image
