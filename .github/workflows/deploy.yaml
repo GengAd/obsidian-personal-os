@@ -44,7 +44,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           # Build output to publish to the `gh-pages` branch:
-          publish_dir: ./build
+          publish_dir: ./docs/build
           #cname: docs.security.tamu.edu
           cname: docs.pers-os.com
           # The following lines assign commit authorship to the official
