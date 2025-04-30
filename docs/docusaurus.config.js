@@ -48,17 +48,21 @@ const config = {
       ({
         docs: {
           sidebarPath: './sidebars.js',
+          routeBasePath: "/",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
           //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
-          showReadingTime: true,
-          feedOptions: {
-            type: ['rss', 'atom'],
-            xslt: true,
-          },
+          showReadingTime: false,
+          postsPerPage: 5,
+          blogSidebarCount: 'ALL',
+          feedOptions: {type: null},
+          // feedOptions: {
+          //   type: ['rss', 'atom'],
+          //   xslt: true,
+          // },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           // editUrl:
@@ -82,6 +86,16 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+      colorMode: {
+        defaultMode: 'dark',
+        respectPrefersColorScheme: true,
+      },
+      docs: {
+        sidebar: {
+          //hideable: true,
+          autoCollapseCategories: true,
+        },
+      },
       // Replace with your project's social card
       image: 'img/Personal_OS_Card.jpg',
       navbar: {
@@ -93,15 +107,28 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'pluginSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Plugin',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          {
+            type: 'docSidebar',
+            sidebarId: 'vaultSidebar',
+            position: 'left',
+            label: 'Vault',
+          },
+          {to: '/blog', label: 'Releases', position: 'left'},
+          // {
+          //   href: 'https://github.com/GengAd/obsidian-personal-os/releases',
+          //   label: 'Releases',
+          //   position: 'left',
+          // },
           {
             href: 'https://github.com/GengAd/obsidian-personal-os',
-            label: 'GitHub',
+            //label: 'GitHub',
             position: 'right',
+            className: 'header-github-link',
+            'aria-label': 'GitHub repository',
           },
         ],
       },
@@ -109,35 +136,16 @@ const config = {
         style: 'dark',
         links: [
           {
-            title: 'Docs',
-            items: [
-              {
-                label: 'Tutorial',
-                to: '/docs/intro',
-              },
-            ],
+            label: 'Personal OS',
+            href: 'https://pers-os.com/',
           },
           {
-            title: 'Community',
-            items: [
-              {
-                label: 'Discord',
-                href: 'https://discord.gg/pgBrED8a',
-              },
-            ],
+            label: 'Discord',
+            href: 'https://discord.gg/pgBrED8a',
           },
           {
-            title: 'More',
-            items: [
-              {
-                label: 'Blog',
-                to: '/blog',
-              },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/GengAd/obsidian-personal-os',
-              },
-            ],
+            label: 'GitHub',
+            href: 'https://github.com/GengAd/obsidian-personal-os',
           },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} WKTMTY. Built with Docusaurus.`,
