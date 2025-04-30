@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkpersonal_os_docs=self.webpackChunkpersonal_os_docs||[]).push([[8121],{8070:e=>{e.exports=JSON.parse('{"tags":[{"label":"Release","permalink":"/blog/tags/release","description":"Personal OS Plugin Updates and Releases","count":5}]}')}}]);
