@@ -18,14 +18,14 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          cache-dependency-path: docs/package-lock.json
+          cache-dependency-path: ./docs/package-lock.json
           node-version: 20
           cache: npm
       - name: Restore node modules from cache in main branch
         id: cache-nodemodules
         uses: actions/cache/restore@v4
         with:
-          path: docs/node_modules
+          path: ./docs/node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
           restore-keys: node_modules- # Take any latest cache if failed to find it for current package-lock.json
       - name: Install dependencies
