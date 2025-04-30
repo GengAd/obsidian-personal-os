@@ -1,9 +1,5 @@
 name: Deploy to GitHub Pages
 
-defaults:
-  run:
-    working-directory: ./docs
-
 on:
   push:
     branches:
@@ -18,6 +14,9 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./docs
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,7 +28,7 @@ jobs:
         id: cache-nodemodules
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: docs/node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
           restore-keys: node_modules- # Take any latest cache if failed to find it for current package-lock.json
       - name: Install dependencies
