@@ -1,4 +1,4 @@
-import { Plugin, MarkdownView } from 'obsidian';
+import { Plugin, MarkdownView, WorkspaceLeaf, TFile } from 'obsidian';
 import PersonalOSSettings from './src/Component/Settings/SettingsTab';
 import Engage from 'src/Component/Engage';
 import EngageCurrentFile from 'src/Component/EngageCurrentFile';
@@ -9,6 +9,7 @@ import TaskFailer from 'src/Component/TaskFailer';
 import SnoozeModal from 'src/Modal/SnoozeModal';
 import RandomSnoozeModal from 'src/Modal/RandomSnoozeModal';
 import ChangelogModal from 'src/Modal/ChangelogModal';
+import ProfileView from 'src/View/ProfileView';
 import ProgressBar from 'src/Component/ProgressBar';
 import Calendar from 'src/Component/Calendar';
 import Timeline from 'src/Component/Timeline';
@@ -25,6 +26,7 @@ export default class PersonalOS extends Plugin {
 	hideTasks: boolean;
 	xpFeedback: XpFeedback | null;
 	functions: POSVaultFunctions;
+	profile: ProfileView;
 	async onload(){	
 		if(customElements.get('progress-bar') == null)
         	customElements.define('progress-bar', ProgressBar);
@@ -42,7 +44,7 @@ export default class PersonalOS extends Plugin {
 			this.startProcess = new StartProcess(this.app, this.graph, this.settings.inboxPages, this.settings.configFolder);
 			if(this.settings.toggleXp){
 				this.xpFeedback = new XpFeedback(this.app);
-				this.registerEvent(this.app.metadataCache.on('changed', this.xpFeedback.displayXpEarned));
+				this.registerEvent(this.app.metadataCache.on('changed', (f: TFile) =>this.xpFeedback!.displayXpEarned(f, this.profile.display)));
 			}
 			this.registerMarkdownCodeBlockProcessor("Calendar", (source, el, ctx) => {
 				// Parse the source to extract parameters
@@ -79,12 +81,13 @@ export default class PersonalOS extends Plugin {
 				new Timeline(this.app).createTimeline(input, el.createEl('div'));
 			});
 			this.loadCommands();
+			this.registerView('Profile View', (leaf: WorkspaceLeaf) => (this.profile = new ProfileView(leaf, this)));
 		});
 	}
 	manageToggle = () => {
 		if(this.settings.toggleXp && !this.xpFeedback){
 			this.xpFeedback = new XpFeedback(this.app);
-			this.registerEvent(this.app.metadataCache.on('changed', this.xpFeedback.displayXpEarned));
+			this.registerEvent(this.app.metadataCache.on('changed', (f: TFile) =>this.xpFeedback!.displayXpEarned(f, this.profile.display)));
 		}else if(!this.settings.toggleXp && this.xpFeedback){
 			this.app.metadataCache.off('changed', this.xpFeedback.displayXpEarned);
 			this.xpFeedback = null;
@@ -181,7 +184,19 @@ export default class PersonalOS extends Plugin {
 					editor.setCursor({ line: cursor.line, ch: cursor.ch + 1 });
 				}
 			}
-		})
+		});
+
+		this.addCommand({
+			id:"profileview",
+			name:"Profile View",
+			callback:async ()=>{
+				await this.app.workspace.getRightLeaf(false)!.setViewState({
+					type: 'Profile View',
+					active: true,
+				  });
+				  this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType('Profile View')[0]);
+			}
+		});
 	}
 	checkForUpdate = () => {
 		if(this.settings.enableChangelog && this.manifest.version != this.settings.currentVersion){
