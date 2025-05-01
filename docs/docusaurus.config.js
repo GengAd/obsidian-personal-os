@@ -39,7 +39,10 @@ const config = {
   },
 
   // Add offline searching
-  plugins: [require.resolve('docusaurus-lunr-search')],
+  plugins: [
+    require.resolve('docusaurus-lunr-search'),
+    '@lunaticmuch/docusaurus-terminology',
+  ],
 
   presets: [
     [
