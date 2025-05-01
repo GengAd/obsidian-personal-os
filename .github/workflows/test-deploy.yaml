@@ -18,20 +18,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          cache-dependency-path: ./docs/package-lock.json
           node-version: 20
-          cache: npm
-      - name: Restore node modules from cache in main branch
-        id: cache-nodemodules
-        uses: actions/cache/restore@v4
-        with:
-          path: ./docs/node_modules
-          key: node_modules-${{ hashFiles('package-lock.json') }}
-          restore-keys: node_modules- # Take any latest cache if failed to find it for current package-lock.json
+          cache: yarn
+
       - name: Install dependencies
-        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-        run: npm ci
+        run: yarn install --frozen-lockfile
       - name: Test build website
-        run: npm run build
+        run: yarn run build
