@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import { useState, useRef, useEffect } from 'preact/hooks';
 import { TFolder } from 'obsidian';
 import { FolderSuggester } from './Suggesters/FolderSuggester';
@@ -44,7 +45,7 @@ export default function StringSetting({
         value={value || ''}
         placeholder={placeholder}
         style={{ width: '100%', padding: 4 }}
-        onInput={e => {
+        onInput={(e: Event) => {
           onChange((e.target as HTMLInputElement).value);
         }}
       />
