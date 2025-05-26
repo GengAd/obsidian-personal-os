@@ -296,11 +296,47 @@ options: noQuickEntry
 ````
 
 ## Releases 
+### 3.0.0 : Release update
+
+Info :
+- Completely reviewed New Vault Template with Datacore ! Faster, cleaner, easier to learn and integrate into you vault, use the discord link to check it out using the above link ! 
+
+Breaking changes : 
+- Engage feature now works with an exclusion list, update your plugin settings ! 
+
+New :
+- Mind-sweep Feature : Unload what's on your mind in minutes with a guided trigger list ! (config file needed !)
+- Full plugin documentation (work in progress ) on https://docs.pers-os.com/
+- Engage now take "Due actions" for the day before schedules actions
+- Engage now take "Future due Actions" first before started action in the "Next" category
+- Overhauled plugin settings for usability
+
+Beta-feature : 
+- Profile view now use Datacore  instead of Dataview. 
+- 28+ Datacore components that can be used across your vault (used in the Vault template !)
+- Instrumental folders with added rules for processing
+- Automatically move files to folders based on a property value
+- Automatically apply a template to a file based on a property value
+
+Incoming : 
+- Finished Plugin documentation 
+- New mission download feature for plugin Vault. 
+- Improve and document beta features
+
+### 2.1.0 : Release update
+
+Bug fix : 
+- Fixed Console "Display missing" error when completing a task.
+
+New features :
+- Process Feature upgrade : Process feature now also take into account a configuration for "Instrumental" folders. Instrumental notes need to "Support" another note to be considered processed. 
+- Auto move notes to folders based on a property value, inspired by Auto-Note-Mover plugin, but using a property instead of a tag. 
+
 ### 2.0.2 : Release update 
 
 Info : 
 - Changed links to new vault template, find it in the official obsidian community or in the Personal OS discord
-Nex features : 
+New features : 
 - Added function support for Xp and progress calculation. 
 - Added Simple profile view (to be improved on)
 - Added Command to launch profile view

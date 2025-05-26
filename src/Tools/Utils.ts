@@ -15,6 +15,27 @@ const getEarlierTimeTask = (tasks: any) => {
             earliestTime = getTime(task.text);
     return earliestTime;
 }
+
+const getEarliestDueDate = (page: any) => {
+    if (!page?.file?.tasks) return 0;
+
+    let earliest: number | undefined = undefined;
+
+    for (const task of page.file.tasks.where?.(isNotCompletedOrCancelled) ?? []) {
+        if (task.due && (!earliest || moment(task.due.ts).isBefore(moment(earliest)))) {
+            earliest = task.due.ts;
+        }
+    }
+
+    return earliest || 0;
+};
+
+const sortDueDates = (a: any, b: any) =>
+    getEarliestDueDate(a) - getEarliestDueDate(b);
+
+
+
+
 const sortTimes = (a: any, b:any) => getEarlierTimeTask(a.file.tasks).localeCompare(getEarlierTimeTask(b.file.tasks));
 const setPriority = (p:any, t:any) =>{
     const {text} = t;
@@ -47,56 +68,103 @@ const isNotCompletedOrCancelled = (t: any) => taskNotCancelled(t) && taskNotComp
 const fileNotArchived = (p:any) => !p.Archived && !p['Handled By']?.path;
 const isNotArchived = (p:any) => !p.Archived;
 const IsDueTime = (p:any) =>
-    p.file.tasks
+    !!(p.taskFound = p.file.tasks
         .where(isNotCompletedOrCancelled)
         .where(isTodayTask)
         .where(isTimeBeforeCurrentTime)
         .where((t:any) => setPriority(p,t))
-        .length >0;
+        .first());
 const isTodayTask = (t: any) => (t.due && moment(t.due.ts).isSame(moment(), 'day') || (t.scheduled && moment(t.scheduled.ts).isSame(moment(), 'day')));
-const IsDueDayWithoutTime = (p:any) =>
-    p.file.tasks
+const IsScheduleDayWithoutTime = (p:any) => 
+    !!(p.taskFound = p.file.tasks
         .where(isNotCompletedOrCancelled)
         .where((t:any) => !hasTimeFormat(t))
-        .where(isTodayTask)
+        .where((t:any) => t.scheduled && moment(t.scheduled.ts).isSame(moment(), 'day'))
         .where((t:any) => setPriority(p,t))
-        .length > 0;
+        .first());
+const IsDueDayWithoutTime = (p:any) => 
+    !!(p.taskFound = p.file.tasks
+        .where(isNotCompletedOrCancelled)
+        .where((t:any) => !hasTimeFormat(t))
+        .where((t:any) => t.due && moment(t.due.ts).isSame(moment(), 'day'))
+        .where((t:any) => setPriority(p,t))
+        .first());
 const IsDueDayButNotTime = (p:any) =>
-        p.file.tasks
-          .where(isTodayTask)
-          .where(isNotCompletedOrCancelled)
-          .where((t:any) => hasTimeFormat(t) && !isTimeBeforeCurrentTime(t))
-          .length > 0;
-const IsNextPage = (p:any) =>
-        ((p.file.tasks
-          .where(isNotCompletedOrCancelled)
-          .where((t:any) => t.start && moment(t.start.ts).isSameOrBefore(moment(), 'day') && !t.scheduled)
-          .where((t:any)=>setPriority(p,t)))
-          .length > 0
-          ||
-        (p.file.tasks
-          .where((t:any) => t.start || t.due || t.scheduled || t.text.contains('[[Someday]]')||t.text.contains('#Someday'))
-          .where(isNotCompletedOrCancelled)
-          .length == 0 
-            &&
-          p.file.tasks.where(isNotCompletedOrCancelled)
-          .where((t:any) => setPriority(p,t))
-          .length>0))
+    !!(p.taskFound = p.file.tasks
+        .where(isTodayTask)
+        .where(isNotCompletedOrCancelled)
+        .where((t:any) => hasTimeFormat(t) && !isTimeBeforeCurrentTime(t))
+        .first());
+const IsNextDue = (p:any) => {
+    if (!p.file || !p.file.tasks) return false;
+    let found = p.file.tasks
+        .where(isNotCompletedOrCancelled)
+        .where((t:any) => t.due && !moment(t.due.ts).isSameOrBefore(moment(), 'day') && !t.scheduled && (!t.start || moment(t.start.ts).isSameOrBefore(moment(), 'day')))
+        .where((t:any)=>setPriority(p,t))
+        .sort((t:any)=>t.due, 'asc')
+        .first();
+    if (found) {
+        p.taskFound = found;
+        return true;
+    }
+    p.taskFound = undefined;
+    return false;
+}
+
+const IsNextPage = (p:any) => {
+    if (!p.file || !p.file.tasks) {
+        return false;
+    }
+    // First clause: start date today or earlier, not scheduled
+    let found = p.file.tasks
+        .where(isNotCompletedOrCancelled)
+        .where((t:any) => t.start && moment(t.start.ts).isSameOrBefore(moment(), 'day') && !t.scheduled)
+        .where((t:any)=>setPriority(p,t))
+        .first();
+    if (found) {
+        p.taskFound = found;
+        return true;
+    }
+    // Second clause: no tasks with start/due/scheduled, pick any not completed/cancelled
+    const hasAnyDated = p.file.tasks
+        .where((t:any) => t.start || t.due || t.scheduled)
+        .where(isNotCompletedOrCancelled)
+        .length > 0;
+    if (!hasAnyDated) {
+        found = p.file.tasks.where(isNotCompletedOrCancelled)
+            .where((t:any) => setPriority(p,t))
+            .first();
+        if (found) {
+            p.taskFound = found;
+            return true;
+        }
+    }
+    p.taskFound = undefined;
+    return false;
+}
+
+
 const isLate = (p: any) => 
-    p.file.tasks
+    !!(p.file.tasks
         .where(isNotCompletedOrCancelled)
         .where(
             (t: any) =>
             (t.due && moment(t.due.ts).isBefore(moment(), 'day')) ||
             (t.scheduled && moment(t.scheduled.ts).isBefore(moment(), 'day'))
-        ).length > 0;
+        ).first());
 const isOpenNoTask = (p: any) => 
     p.file.tasks
         .where(isNotCompletedOrCancelled)
         .length == 0;
 const isTaskFailed = (t: any) =>
     isNotCompletedOrCancelled(t) && t.due && (moment(t.due.ts).isBefore(moment(), 'day'))
-export {getTime, sortTimes, fileNotArchived, IsDueTime, IsDueDayWithoutTime,IsDueDayButNotTime, IsNextPage, isNotCompletedOrCancelled, isLate, isOpenNoTask, isNotArchived, isTaskFailed, isTodayTask, isTimeBeforeCurrentTime, hasTimeFormat};
+
+const fileDueOnly = (p: any) => 
+    !!(p.taskFound = p.file.tasks
+        .where(isDueOnly)
+        .first());
+
+export {getTime, sortTimes, sortDueDates, fileNotArchived, IsDueTime, IsDueDayWithoutTime,IsDueDayButNotTime, IsNextPage, IsNextDue, isNotCompletedOrCancelled, isLate, isOpenNoTask, isNotArchived, isTaskFailed, isTodayTask, isTimeBeforeCurrentTime, hasTimeFormat, IsScheduleDayWithoutTime, fileDueOnly};
 
 const parseTasks = (input: string) =>{
     const calendarRegex = /\[x\] (.*?) ✅ (\d{4}-\d{2}-\d{2}) (.*?) \[\[(.*?)\]\]/g;
@@ -117,55 +185,65 @@ const parseTasks = (input: string) =>{
     return result;
 }
 
-const parseTasksToCancel = (input: string) =>{
-    const autoRegex = /- \[[ ]\] (.*?)(?=\n|$)/g;
-    const reccuringRegex = /🔁\s*(.*?)\s*[🛫⏳📅⌚]/;
+const parseTasksToCancel = (input: string) => {
+    const autoRegex = /^- \[\s\] .+$/gm;
+    const recurringRegex = /🔁\s*(.*?)\s*(?=🛫|⏳|📅|$)/;
     const datesRegex = /(🛫|📅|⏳)\s*(\d{4}-\d{2}-\d{2})/g;
-    const result: {task: string, startDate?: string, dueDate?:string, scheduledDate?:string, rrules: {[key:string]: RRule}}[] = [];
-    for(let match of input.matchAll(autoRegex)){
+
+    const result: {
+        task: string,
+        startDate?: string,
+        dueDate?: string,
+        scheduledDate?: string,
+        rrules: { [key: string]: RRule }
+    }[] = [];
+
+    for (const match of input.matchAll(autoRegex)) {
         const task = match[0];
-        const dates = task.match(datesRegex);
-        let startDate = "";
-        let dueDate = "";
-        let scheduledDate = "";
-        let rrules: {[key:string]: RRule} = {};
-        if(dates && dates.length > 0){
-            for(let date of dates){
-                if(date.includes("🛫"))
-                    startDate = date.replace("🛫","").trim();
-                if(date.includes("📅"))
-                    dueDate = date.replace("📅","").trim();
-                if(date.includes("⏳"))
-                    scheduledDate = date.replace("⏳","").trim();
-            }
+        const dates: { [key: string]: string } = {};
+        let m;
+
+        while ((m = datesRegex.exec(task)) !== null) {
+            if (m[1] === "🛫") dates.startDate = m[2];
+            if (m[1] === "📅") dates.dueDate = m[2];
+            if (m[1] === "⏳") dates.scheduledDate = m[2];
         }
-        const recuringMatch = task.match(reccuringRegex);
-        const recurringValue = recuringMatch ? recuringMatch[1] : "";
-        if(recurringValue != ""){
-            const options = RRule.fromText(recurringValue).origOptions;
-            if(startDate){
+
+        const rrules: { [key: string]: RRule } = {};
+        const recurMatch = task.match(recurringRegex);
+        if (recurMatch && recurMatch[1].trim() !== "") {
+            const options = RRule.fromText(recurMatch[1].trim()).origOptions;
+
+            if (dates.startDate) {
                 rrules.start = new RRule({
                     ...options,
-                    dtstart: moment(startDate).toDate()
+                    dtstart: moment.utc(dates.startDate, "YYYY-MM-DD").startOf("day").toDate(),
                 });
             }
-            if(dueDate){
+
+            if (dates.dueDate) {
                 rrules.due = new RRule({
                     ...options,
-                    dtstart: moment(dueDate).toDate()
+                    dtstart: moment.utc(dates.dueDate, "YYYY-MM-DD").startOf("day").toDate(),
                 });
             }
-            if(scheduledDate){
+            if (dates.scheduledDate) {
                 rrules.scheduled = new RRule({
                     ...options,
-                    dtstart: moment(scheduledDate).toDate()
+                    dtstart: moment.utc(dates.scheduledDate, "YYYY-MM-DD").startOf("day").toDate(),
                 });
             }
         }
-        result.push({task,startDate,dueDate,scheduledDate,rrules});
+
+        result.push({ task, ...dates, rrules });
     }
+
     return result;
-}
+};
+
+
+
+
 
 const parseTags = (tags :string[]) =>{
     let result = "";
@@ -282,6 +360,8 @@ const IsRecurringThisDay = (task: any, date: any)=>{
 
 const isDueOrScheduled = (task: any) =>
     isNotCompletedOrCancelled(task) && (task.due || task.scheduled);
+const isDueOnly = (task: any) =>
+    isNotCompletedOrCancelled(task) && task.due && !task.scheduled;
 const isTime = (task: any) =>
     isNotCompletedOrCancelled(task) && hasTimeFormat(task) && isDueOrScheduled(task);
 
@@ -303,7 +383,11 @@ const sortTasks = (a: any, b: any, date: any) =>{
     }
     return a.priority - b.priority;
 }
-export {getFilename, momentToRegex, getMetaFromNote, IsRecurringThisDay, isDueOrScheduled, isTime, isTimePassed, sortTasks};
+
+const sortDue = (a: any, b: any) => {
+    return moment(a.due.ts).diff(moment(b.due.ts));
+}
+export {getFilename, momentToRegex, getMetaFromNote, IsRecurringThisDay, isDueOrScheduled, isDueOnly, isTime, isTimePassed, sortTasks, sortDue};
 
 /** POSVaultFunctions tools */
 
@@ -350,3 +434,8 @@ const totalXpToTargetLevel = (targetLevel: number, x: number, y: number) => {
     return totalXp;
 }
 export {calculatePagePoints, calculateTotalPoints, currentLevelBasedOnXp, xpForNextLevel, totalXpToTargetLevel};
+
+
+
+
+

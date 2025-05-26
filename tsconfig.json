@@ -11,7 +11,9 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "isolatedModules": true,
-	"strictNullChecks": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+	  "strictNullChecks": true,
     "lib": [
       "DOM",
       "ES5",

@@ -30,14 +30,26 @@ export default class SnoozeModal extends FuzzySuggestModal<SnoozeOptions> {
             const dateRegex = /(🛫|⏳|📅)\s*(\d{4}-\d{2}-\d{2})/g;
             let newContent = content;
             let oldestDate = moment();
+            let foundAnyDate = false;
             for(const match of newContent.matchAll(taskRegex)){
                 const task = match[0];
-                const dates = task.match(dateRegex);
-                if(dates && dates.length > 0)
-                    for(const currentDate of dates){
-                        if(moment(currentDate.split(' ')[1]).isBefore(oldestDate))
-                            oldestDate = moment(currentDate.split(' ')[1]);
+                console.log('Matched task:', task);
+                const dates = [...task.matchAll(dateRegex)];
+                if(dates && dates.length > 0) {
+                    foundAnyDate = true;
+                    for(const dateMatch of dates){
+                        const currentDate = dateMatch[0];
+                        const dateStr = dateMatch[2];
+                        console.log('  Found date:', currentDate, 'parsed as', dateStr);
+                        if(moment(dateStr).isBefore(oldestDate))
+                            oldestDate = moment(dateStr);
                     }
+                } else {
+                    console.log('  No dates found in this task.');
+                }
+            }
+            if (!foundAnyDate) {
+                console.log('No dates found in any tasks. Snooze will not update any dates.');
             }
             let diff = moment().diff(oldestDate, 'days');
             const startDate = moment(oldestDate);
@@ -58,10 +70,15 @@ export default class SnoozeModal extends FuzzySuggestModal<SnoozeOptions> {
             diff += getRandomTime(startDate, endDate).diff(moment(), 'days');
             for(const match of newContent.matchAll(taskRegex)){
                 const task = match[0];
-                const dates = task.match(dateRegex);
+                const dates = [...task.matchAll(dateRegex)];
                 if(dates && dates.length > 0)
-                    for(const currentDate of dates)
-                        newContent = newContent.replace(currentDate, `${currentDate.split(' ')[0]} ${moment(currentDate.split(' ')[1]).add(diff, 'days').format('YYYY-MM-DD')}`);
+                    for(const dateMatch of dates) {
+                        const currentDate = dateMatch[0];
+                        const dateStr = dateMatch[2];
+                        const newDate = moment(dateStr).add(diff, 'days').format('YYYY-MM-DD');
+                        console.log(`Replacing date: ${currentDate} with ${dateMatch[1]} ${newDate}`);
+                        newContent = newContent.replace(currentDate, `${dateMatch[1]} ${newDate}`);
+                    }
             }
             return newContent;
         });

@@ -25,9 +25,11 @@
 	},
 	"dependencies": {
 		"canvas-confetti": "^1.9.2",
+		"fflate": "^0.8.2",
 		"graphology": "^0.25.4",
 		"marked": "^9.1.3",
 		"obsidian-dataview": "^0.5.64",
+		"preact": "^10.17.1",
 		"rrule": "^2.8.1"
 	}
 }

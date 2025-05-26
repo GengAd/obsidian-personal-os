@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * This code is inspired from the work of 702573N https://github.com/702573N/Obsidian-Tasks-Calendar
  */
@@ -1465,6 +1466,41 @@ body.is-mobile .tasksCalendar .statisticPopup li {
   display: none;
 }
 
+/* Only apply to embeds when the note has the cssclass 'clean-embeds' */
+.markdown-preview-view.clean-embeds .markdown-embed h1,
+.markdown-preview-view.clean-embeds .markdown-embed h2 {
+  display: none;
+}
+
+/* Optional: Also apply in Live Preview */
+.markdown-source-view.is-live-preview.clean-embeds .markdown-embed h1,
+.markdown-source-view.is-live-preview.clean-embeds .markdown-embed h2 {
+  display: none;
+}
+
+.markdown-preview-view.no-inline-title .inline-title {
+  display: none;
+}
+
+.markdown-source-view.is-live-preview.no-inline-title .inline-title {
+  display: none;
+}
+
+/* Live Preview only – hide lines that include the #Hide tag */
+.markdown-source-view.is-live-preview.hidden-tag-lines .cm-line:has(.cm-tag-Hidden) {
+  display: none !important;
+}
+
+/* Reading View only – Hide headings that directly include the tag #Hide */
+.markdown-preview-view.hidden-tag-lines h6:has(a.tag[href="#Hidden"]) {
+  display: none !important;
+}
+
+/* Reading View only – hide list items with the #Hide tag */
+.markdown-preview-view.hidden-tag-lines li:has(a.tag[href="#Hidden"]) {
+  display: none !important;
+}
+
 .max-width {
   display: flex;
   flex-grow: 1;
@@ -1514,6 +1550,94 @@ body.is-mobile .tasksCalendar .statisticPopup li {
 .markdown-source-view input[data-task-status-type=CANCELLED]:hover {
   background-color: var(--color-red);
   border-color: var(--color-red);
+}
+
+.profile-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+}
+
+.profile-view-avatar {
+  grid-column: 1;
+  grid-row: 1/span 2;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+.profile-view-avatar img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-s);
+}
+
+.profile-view-level {
+  grid-column: 2;
+  grid-row: 1;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+
+.profile-view-mastery {
+  grid-column: 3;
+  grid-row: 1;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+
+.profile-view-progress {
+  grid-column: 2/span 2;
+  grid-row: 2;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+
+.pos-missions-container {
+  padding: 20px;
+  max-width: 100%;
+}
+
+.pos-missions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+@media (max-width: 600px) {
+  .pos-missions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pos-mission-card {
+  background-color: var(--background-secondary);
+  border-radius: var(--radius-s);
+  padding: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: var(--border-width) solid var(--background-modifier-border);
+}
+.pos-mission-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.pos-mission-card:focus {
+  outline: 2px solid var(--text-accent);
+  outline-offset: 2px;
+}
+.pos-mission-card h2 {
+  margin: 0 0 8px 0;
+  font-size: 1.2em;
+  color: var(--text-normal);
+}
+.pos-mission-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9em;
+  line-height: 1.4;
 }
 
 /*# sourceMappingURL=styles.css.map */

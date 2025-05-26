@@ -11,7 +11,7 @@ export default class XpFeedback{
         this.dv = getAPI(app);
         this.currentFile = null;
     }
-    displayXpEarned = (file : TFile, callBack: Function) => {
+    displayXpEarned = (file : TFile, callBack: Function | undefined) => {
         if(file != this.app.workspace.getActiveFile()) return;
         if(this.currentFile != file){
             this.app.vault.cachedRead(file).then((content) => {
@@ -34,7 +34,8 @@ export default class XpFeedback{
                 }
             }
             this.currentFileContent = content;
-            callBack();
+            if(typeof callBack == 'function')
+                callBack();
         });
     }
    
