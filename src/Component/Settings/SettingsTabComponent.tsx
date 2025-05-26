@@ -1,12 +1,42 @@
 import { h, Fragment } from 'preact';
 import { useState } from 'preact/hooks';
-import { Platform } from 'obsidian';
+import { Platform, App } from 'obsidian';
 import ListSetting from './ListSetting';
 import StringSetting from './StringSetting';
 import confetti from 'canvas-confetti';
 import { createSVGAndLink } from 'src/Tools/Utils';
 
-export default function SettingsTabComponent({ plugin, settings, updateSetting }: { plugin: any, settings: any, updateSetting: (key: string, value: any) => void }) {
+interface Settings {
+  configFolder: string;
+  missionTemplateFolder: string;
+  missionDestinationFolder: string;
+  enableChangelog: boolean;
+  officePages: string[];
+  inboxPages: string[];
+  instrumentalFolders: string[];
+  automaticMove: boolean;
+  displayMoveNotice: boolean;
+  automaticTemplate: boolean;
+  excludedFolders: string[];
+  specificRouting: Array<{
+    property: string;
+    value: string;
+    path: string;
+  }>;
+  [key: string]: any;
+}
+
+interface Plugin {
+  app: App;
+}
+
+interface SettingsTabComponentProps {
+  plugin: Plugin;
+  settings: Settings;
+  updateSetting: (key: string, value: any) => void;
+}
+
+export default function SettingsTabComponent({ plugin, settings, updateSetting }: SettingsTabComponentProps) {
   const [activeTab, setActiveTab] = useState(0);
   const [open, setOpen] = useState(true);
   const isMobile = Platform.isMobile;
