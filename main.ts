@@ -282,11 +282,11 @@ export default class PersonalOS extends Plugin {
 			}
 		});
 	}
-	checkForUpdate = () => {
+	async checkForUpdate() {
 		if(this.settings.enableChangelog && this.manifest.version != this.settings.currentVersion){
 			new ChangelogModal(this.app).open();
 			this.settings.currentVersion = this.manifest.version;
-			this.settings.saveSettings();
+			await this.saveData(this.settings);
 		}
 	}
 
