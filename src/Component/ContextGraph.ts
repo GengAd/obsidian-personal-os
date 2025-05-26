@@ -23,7 +23,8 @@ export default class ContextGraph extends Graph{
     reload = (officePages?: string[]) =>{
         this.clear();
         if(officePages) this.setOfficePages(officePages);
-        this.office = this.dv.pages(`${this.officePages.map(el => `"${el}"`).join(' or ')}`);
+        const exclusion = this.officePages.map(el => `-"${el}"`).join(' and ');
+        this.office = this.dv.pages(exclusion);
         this.office.forEach((p: any) => {
             if(!this.hasNode(p.file.path)) this.addNode(p.file.path);
             if(p.context?.path){

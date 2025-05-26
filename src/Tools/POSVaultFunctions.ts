@@ -75,12 +75,12 @@ export default class POSVaultFunctions {
             } else if (linkedPage.tags?.includes("Achievement")) {
                 // Set the Completed on date if not already set
                 await this.app.fileManager.processFrontMatter(targetFile as TFile, (frontmatter: any) => {
-                    if (!frontmatter['Completed on']) {
+                    if (!frontmatter['Completed On']) {
                         let currentDate = new Date().toISOString().slice(0, 10);
-                        frontmatter['Completed on'] = currentDate;
+                        frontmatter['Completed On'] = currentDate;
                         console.log(`Set 'Completed on' for ${linkedFilePath} to ${currentDate}`);
                     } else {
-                        console.log(`'Completed on' already set for ${linkedFilePath}: ${frontmatter['Completed on']}`);
+                        console.log(`'Completed on' already set for ${linkedFilePath}: ${frontmatter['Completed On']}`);
                     }
                 });
             }
@@ -194,7 +194,7 @@ export default class POSVaultFunctions {
         // Function to check if the mission is in progress
         const isMissionInProgress = (templatePath: any) => {
             const referencingFiles = this.dv.pages("#Course OR #Mission OR #Exercise")
-                .where((file: any) => file["From template"]?.path === templatePath && file.Archived !== true);
+                .where((file: any) => file["From Template"]?.path === templatePath && file.Archived !== true);
 
             return referencingFiles.values.length > 0 ? referencingFiles.values[0] : null; // Return the first in-progress file if it exists
         }

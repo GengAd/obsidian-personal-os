@@ -1516,4 +1516,47 @@ body.is-mobile .tasksCalendar .statisticPopup li {
   border-color: var(--color-red);
 }
 
+.profile-view {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+}
+
+.profile-view-avatar {
+  grid-column: 1;
+  grid-row: 1/span 2;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+.profile-view-avatar img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-s);
+}
+
+.profile-view-level {
+  grid-column: 2;
+  grid-row: 1;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+
+.profile-view-mastery {
+  grid-column: 3;
+  grid-row: 1;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+
+.profile-view-progress {
+  grid-column: 2/span 2;
+  grid-row: 2;
+  border: var(--border-width) solid var(--text-muted);
+  border-radius: var(--radius-s);
+  padding: 5px;
+}
+
 /*# sourceMappingURL=styles.css.map */
