@@ -25,7 +25,7 @@ export const TimedCount = ({ date, dc, app }: CountProps) => {
   };
   if (!folders.length) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Timed</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Timed</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={0} />
       </span>
@@ -43,7 +43,7 @@ export const TimedCount = ({ date, dc, app }: CountProps) => {
   const count = Number(new Set(timedTasks.map((t: any) => t.$file)).size);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Timed</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Timed</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={count} />
       </span>
@@ -63,7 +63,7 @@ export const DueCount = ({ date, dc, app }: CountProps) => {
   };
   if (!folders.length) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Due</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Due</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={0} />
       </span>
@@ -76,7 +76,7 @@ export const DueCount = ({ date, dc, app }: CountProps) => {
   const count = Number(new Set(dueTasks.map((t: any) => t.$file)).size);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Due</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Due</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={count} />
       </span>
@@ -96,7 +96,7 @@ export const ScheduledCount = ({ date, dc, app }: CountProps) => {
   };
   if (!folders.length) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Scheduled</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Scheduled</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={0} />
       </span>
@@ -113,7 +113,7 @@ export const ScheduledCount = ({ date, dc, app }: CountProps) => {
   const count = Number(new Set(scheduledTasks.map((t: any) => t.$file)).size);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Scheduled</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Scheduled</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={count} />
       </span>
@@ -133,7 +133,7 @@ export const NextCount = ({ date, dc, app }: CountProps) => {
   };
   if (!folders.length) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Next</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Next</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={0} />
       </span>
@@ -192,7 +192,7 @@ export const NextCount = ({ date, dc, app }: CountProps) => {
   }
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Next</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Next</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={count} />
       </span>
@@ -216,7 +216,7 @@ export const HandledCount = ({ date, dc, app }: CountProps) => {
   const count = Number(new Set(handledTasks.map((t: any) => t.$file)).size);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Handled</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Handled</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <HandledBadge count={count} />
       </span>
@@ -243,7 +243,7 @@ export const FutureCount = ({ from, to, ceiling, dc, app, label }: FutureCountPr
   const displayLabel = label || 'Future';
   if (!folders.length) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>{displayLabel}</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>{displayLabel}</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <span style={{ fontSize: '1.5em', fontWeight: 700 }}>0 / {ceiling}</span>
       </span>
@@ -273,7 +273,7 @@ export const FutureCount = ({ from, to, ceiling, dc, app, label }: FutureCountPr
   else if (ceiling - count < 10) color = 'var(--text-warning)';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>{displayLabel}</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>{displayLabel}</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <span style={{ fontSize: '1.5em', fontWeight: 700, color }}>{count}</span>
         <span style={{ fontSize: '1.5em', fontWeight: 700, color }}> / {ceiling}</span>
@@ -294,7 +294,7 @@ export const LateCount = ({ dc, app }: CountProps) => {
   };
   if (!folders.length) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Late</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Late</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <CountBadge count={0} />
       </span>
@@ -315,7 +315,7 @@ export const LateCount = ({ dc, app }: CountProps) => {
   const color = count === 0 ? 'var(--text-success)' : 'var(--text-error)';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Late</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Late</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <h1
           style={{
@@ -450,7 +450,7 @@ export const ToProcessCount = ({ dc, app }: CountProps) => {
   const color = count === 0 ? 'var(--text-success)' : 'var(--text-warning)';
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>To Process</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>To Process</div>
       <span style={{ cursor: 'pointer', display: 'inline-block' }} onClick={handleOpenFile}>
         <h1
           style={{

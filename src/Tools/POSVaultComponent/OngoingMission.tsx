@@ -104,13 +104,13 @@ export const OngoingMission = ({ app, dc }: OngoingMissionProps) => {
                   </div>
                 )}
                 <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "16px" }}>
-                  <dc.Text style={{ fontSize: "24px", fontWeight: "bold", color: "var(--text-normal)" }}>
+                  <div style={{ fontSize: "24px", fontWeight: "bold", color: "var(--text-normal)" }}>
                     {ongoingMission.$name}
-                  </dc.Text>
+                  </div>
                   {description && (
-                    <dc.Text style={{ fontSize: "16px", color: "var(--text-normal)" }}>
+                    <div style={{ fontSize: "16px", color: "var(--text-normal)" }}>
                       {description}
-                    </dc.Text>
+                    </div>
                   )}
                   <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                     {difficultyStars && (

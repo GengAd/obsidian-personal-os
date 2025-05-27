@@ -84,7 +84,7 @@ export function RequirementProgressBar({ app, dc, file, style }: RequirementProg
           }
         `}
       </style>
-      <dc.Text
+      <div
         style={{
           fontSize: "14px",
           color: "var(--text-normal)",
@@ -92,7 +92,7 @@ export function RequirementProgressBar({ app, dc, file, style }: RequirementProg
         }}
       >
         {completed} / {total} requirements met
-      </dc.Text>
+      </div>
     </dc.Stack>
   );
 }

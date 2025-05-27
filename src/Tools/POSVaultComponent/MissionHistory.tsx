@@ -40,7 +40,7 @@ export const CompletedMissionList = ({ app, dc }: CompletedMissionListProps) => 
     .sort((a: any, b: any) => (b.completedOnValue || "").localeCompare(a.completedOnValue || ""));
 
   if (!completedMissions.length) {
-    return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No completed missions found.</dc.Text>;
+    return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No completed missions found.</div>;
   }
 
   return (
@@ -158,7 +158,7 @@ export const CompletedMissionTemplateList = ({ app, dc }: CompletedMissionTempla
   };
 
   if (!completedTemplates.length) {
-    return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No completed mission templates found.</dc.Text>;
+    return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No completed mission templates found.</div>;
   }
 
   return (

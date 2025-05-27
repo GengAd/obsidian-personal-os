@@ -21,11 +21,16 @@ export default class TaskFailer {
     }
 
     autoFailInstrumentalTasks = () => {
-        this.autoFailPages(this.dv.pages(`${this.instrumentalFolders.map(el => `"${el}"`).join(' or ')}`));
+        const pages = this.dv.pages(`${this.instrumentalFolders.map(el => `"${el}"`).join(' or ')}`);
+        this.autoFailPages(pages);
     }
 
     autoFailPages = async (pages: any) => {
-        for(let task of pages.file.tasks.where(isTaskFailed)){
+        if (!pages || !pages.file || !pages.file.tasks) {
+            return;
+        }
+        const failedTasks = pages.file.tasks.where(isTaskFailed);
+        for(let task of failedTasks){
             const file = this.app.vault.getAbstractFileByPath(task.path);
             if(file instanceof TFile)
                 this.failTask(file);
@@ -49,36 +54,37 @@ export default class TaskFailer {
                 // 🔁 RECURRING TASKS
                 if (task.rrules.due) {
                     if (!shouldFail) continue;
-                    const rangeEnd = failToday
-                        ? today.clone().endOf("day").toDate()
-                        : today.clone().subtract(1, "day").endOf("day").toDate();
-    
+                    // Always use UTC for all date handling
+                    const dueDateUTC = moment.utc(task.dueDate, 'YYYY-MM-DD').startOf('day');
+                    const todayUTC = moment.utc(today.format('YYYY-MM-DD'), 'YYYY-MM-DD').startOf('day');
+                    const rangeEndUTC = failToday
+                        ? todayUTC.clone().endOf('day').toDate()
+                        : todayUTC.clone().subtract(1, 'day').endOf('day').toDate();
+
                     const failedDatesSet = new Set<string>();
-    
-                    // Always include current due date if it's due
-                    failedDatesSet.add(dueDate.format("YYYY-MM-DD"));
-    
-                    // Include missed recurring dates
+
+                    // Always include current due date if it's due (in UTC)
+                    failedDatesSet.add(dueDateUTC.format('YYYY-MM-DD'));
+
                     const missed = task.rrules.due.between(
-                        dueDate.clone().startOf("day").utc().toDate(),
-                        moment(rangeEnd).utc().toDate(),
+                        dueDateUTC.toDate(),
+                        rangeEndUTC,
                         true
                     );
-    
                     missed.forEach(d => {
-                        failedDatesSet.add(moment.utc(d).format("YYYY-MM-DD"));
+                        failedDatesSet.add(moment.utc(d).format('YYYY-MM-DD'));
                     });
                     if (failedDatesSet.size === 0) continue;
-    
+
                     const failedDates = Array.from(failedDatesSet).sort().reverse();
                     const newLines: string[] = [];
-    
+
                     // Calculate the number of missed recurrences
                     const missedCount = failedDates.length;
                     // Sort failedDates ascending (oldest first)
                     const failedDatesSorted = Array.from(failedDatesSet).sort();
 
-                    // Helper to advance a date by n recurrences using a rule
+                    // Helper to advance a date by n recurrences using a rule (always UTC)
                     function advanceDate(rule: any, original: string, n: number): string {
                         let date = moment.utc(original, 'YYYY-MM-DD').toDate();
                         let result = date;
@@ -94,9 +100,9 @@ export default class TaskFailer {
                         let schedVal = task.scheduledDate && task.rrules.scheduled ? advanceDate(task.rrules.scheduled, task.scheduledDate, i) : task.scheduledDate;
                         let dueVal = task.dueDate && task.rrules.due ? advanceDate(task.rrules.due, task.dueDate, i) : task.dueDate;
                         let failed = task.task.replace('[ ]', '[-]');
-                        if (startVal) failed = failed.replace(/(🛫) \d{4}-\d{2}-\d{2}/, `$1 ${startVal}`);
-                        if (schedVal) failed = failed.replace(/(⏳) \d{4}-\d{2}-\d{2}/, `$1 ${schedVal}`);
-                        if (dueVal) failed = failed.replace(/(📅) \d{4}-\d{2}-\d{2}/, `$1 ${dueVal}`);
+                        if (startVal) failed = failed.replace(/(🛫)\s+\d{4}-\d{2}-\d{2}/, `$1 ${startVal}`);
+                        if (schedVal) failed = failed.replace(/(⏳)\s+\d{4}-\d{2}-\d{2}/, `$1 ${schedVal}`);
+                        if (dueVal) failed = failed.replace(/(📅)\s+\d{4}-\d{2}-\d{2}/, `$1 ${dueVal}`);
                         failed += ` ❌ ${dueVal}`;
                         newLines.unshift(failed); // oldest at bottom
                     }
@@ -106,11 +112,11 @@ export default class TaskFailer {
                     let nextSched = task.scheduledDate && task.rrules.scheduled ? advanceDate(task.rrules.scheduled, task.scheduledDate, missedCount) : task.scheduledDate;
                     let nextDue = task.dueDate && task.rrules.due ? advanceDate(task.rrules.due, task.dueDate, missedCount) : task.dueDate;
                     let nextLine = task.task;
-                    if (nextStart) nextLine = nextLine.replace(/(🛫) \d{4}-\d{2}-\d{2}/, `$1 ${nextStart}`);
-                    if (nextSched) nextLine = nextLine.replace(/(⏳) \d{4}-\d{2}-\d{2}/, `$1 ${nextSched}`);
-                    if (nextDue) nextLine = nextLine.replace(/(📅) \d{4}-\d{2}-\d{2}/, `$1 ${nextDue}`);
+                    if (nextStart) nextLine = nextLine.replace(/(🛫)\s+\d{4}-\d{2}-\d{2}/, `$1 ${nextStart}`);
+                    if (nextSched) nextLine = nextLine.replace(/(⏳)\s+\d{4}-\d{2}-\d{2}/, `$1 ${nextSched}`);
+                    if (nextDue) nextLine = nextLine.replace(/(📅)\s+\d{4}-\d{2}-\d{2}/, `$1 ${nextDue}`);
                     newLines.unshift(nextLine);
-    
+
                     fileContent = fileContent.replace(task.task, newLines.join("\n"));
                     continue;
                 }

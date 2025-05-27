@@ -172,17 +172,6 @@ export const MissionProgressBar = ({ missionFile: providedMissionFile, app, dc }
           }
         `}
       </style>
-      {/*
-      <dc.Text
-        style={{
-          fontSize: "14px",
-          color: "var(--text-normal)",
-          textAlign: "center",
-        }}
-      >
-        {completedTemplates} / {totalTemplates} Activities completed
-      </dc.Text>
-      */}
     </dc.Stack>
   );
 };

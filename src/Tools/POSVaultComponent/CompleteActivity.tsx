@@ -34,9 +34,9 @@ export const CompleteActivity = ({
   if (!file) {
     return (
       <dc.Stack>
-        <dc.Text style={{ color: 'var(--text-warning)', textAlign: 'center' }}>
+        <div style={{ color: 'var(--text-warning)', textAlign: 'center' }}>
           Waiting for file context...
-        </dc.Text>
+        </div>
       </dc.Stack>
     );
   }

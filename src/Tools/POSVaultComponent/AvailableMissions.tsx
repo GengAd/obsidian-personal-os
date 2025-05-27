@@ -280,7 +280,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
           >
             ← Back
           </dc.Button>
-          <dc.Text style={{
+          <div style={{
             fontSize: '24px',
             fontWeight: 'bold',
             color: 'var(--text-normal)',
@@ -288,7 +288,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
             textAlign: 'right'
           }}>
             {selectedTemplate?.$name}
-          </dc.Text>
+          </div>
         </dc.Group>
 
         {imageUrl && (
@@ -314,7 +314,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
         )}
 
         <dc.Group style={{ gap: '12px' }}>
-          <dc.Text style={{
+          <div style={{
             fontSize: '14px',
             color: 'var(--text-muted)',
             //background: 'var(--background-secondary)',
@@ -323,7 +323,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
             fontWeight: 'bold'
           }}>
             Difficulty: {formatDifficulty(selectedTemplate?.$frontmatter?.difficulty?.value)}
-          </dc.Text>
+          </div>
         </dc.Group>
 
         {selectedTemplate && selectedTemplate.$sections?.some((section: any) => {
@@ -392,9 +392,9 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
   if (!ready) {
     return (
       <dc.Stack>
-        <dc.Text style={{ color: "var(--text-warning)", textAlign: "center" }}>
+        <div style={{ color: "var(--text-warning)", textAlign: "center" }}>
           Loading mission folders...
-        </dc.Text>
+        </div>
       </dc.Stack>
     );
   }
@@ -406,14 +406,14 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
       gap: '32px'
     }}>
       {!isDetailView && (
-        <dc.Text style={{
+        <div style={{
           fontSize: '28px',
           fontWeight: 'bold',
           color: 'var(--text-normal)',
           textAlign: 'center'
         }}>
           Available Missions
-        </dc.Text>
+        </div>
       )}
 
       {isDetailView ? (
@@ -492,16 +492,16 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
                   gap: '8px',
                   flexGrow: 1
                 }}>
-                  <dc.Text style={{
+                  <div style={{
                     fontSize: '18px',
                     fontWeight: 'bold',
                     color: 'var(--text-normal)',
                     lineHeight: '1.3'
                   }}>
                     {template.$name}
-                  </dc.Text>
+                  </div>
                   {tagline && (
-                    <dc.Text style={{
+                    <div style={{
                       fontSize: '13px',
                       color: 'var(--text-muted)',
                       marginTop: '-4px',
@@ -512,7 +512,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
                       fontStyle: 'italic',
                     }}>
                       {tagline}
-                    </dc.Text>
+                    </div>
                   )}
                   <div style={{
                     marginTop: 'auto',
@@ -520,7 +520,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
                     alignItems: 'center',
                     gap: '8px'
                   }}>
-                    <span style={{
+                    <div style={{
                       fontSize: '14px',
                       color: 'var(--text-muted)',
                       padding: '4px 8px',
@@ -529,7 +529,7 @@ export const AvailableMissions = ({ app, dc, handleTemplateSelect }: AvailableMi
                       display: 'inline-block'
                     }}>
                       {formatDifficulty(difficulty)}
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>

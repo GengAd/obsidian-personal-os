@@ -15,7 +15,7 @@ export const LinkedFilesWithClassFilter = ({ app, dc }: LinkedFilesWithClassFilt
   const [page, setPage] = dc.useState(1);
   const itemsPerPage = 15;
 
-  if (!current) return <dc.Text style={{ color: 'var(--text-warning)', textAlign: 'center' }}>⚠️ Could not load current file.</dc.Text>;
+  if (!current) return <div style={{ color: 'var(--text-warning)', textAlign: 'center' }}>⚠️ Could not load current file.</div>;
   const allPages = dc.useQuery('@page');
   const currentPath = current.$path;
 
@@ -111,7 +111,7 @@ export const LinkedFilesWithClassFilter = ({ app, dc }: LinkedFilesWithClassFilt
       {/* Header and tab toggle */}
       <dc.Group>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: 8, width: '100%' }}>
-          <dc.Text style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-normal)', flex: 1 }}>Impacting List</dc.Text>
+          <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-normal)', flex: 1 }}>Impacting List</div>
           <dc.Group style={{ gap: 0 }}>
             <dc.Button
               style={{
@@ -312,7 +312,7 @@ export const LinkedFilesWithClassFilter = ({ app, dc }: LinkedFilesWithClassFilt
             </div>
           );
         }) : (
-          <dc.Text style={{ textAlign: 'center', padding: '1rem' }}>No results found.</dc.Text>
+          <div style={{ textAlign: 'center', padding: '1rem' }}>No results found.</div>
         )}
       </dc.Stack>
       <dc.Group>

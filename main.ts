@@ -284,7 +284,7 @@ export default class PersonalOS extends Plugin {
 	}
 	async checkForUpdate() {
 		if(this.settings.enableChangelog && this.manifest.version != this.settings.currentVersion){
-			new ChangelogModal(this.app).open();
+			//new ChangelogModal(this.app).open();
 			this.settings.currentVersion = this.manifest.version;
 			await this.saveData(this.settings);
 		}

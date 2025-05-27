@@ -138,7 +138,7 @@ export const RoutineStreak = ({ app, dc, file, filterText, N = 21 }: RoutineStre
   // Find the first recurring task (for now, only support one per file)
   const recurringTask = tasks.find((t: any) => getRecurrenceRule(t));
   if (!recurringTask) {
-    return <dc.Stack style={{alignItems:'center',justifyContent:'center',padding:24}}><dc.Text>No recurring routine found.</dc.Text></dc.Stack>;
+    return <dc.Stack style={{alignItems:'center',justifyContent:'center',padding:24}}><div>No recurring routine found.</div></dc.Stack>;
   }
   // Find all tasks with the same recurrence rule (same text up to 🔁)
   const baseText = recurringTask.$text.split('🔁')[0].trim();
@@ -168,7 +168,7 @@ export const RoutineStreak = ({ app, dc, file, filterText, N = 21 }: RoutineStre
     </div>;
   }
   if (!rule) {
-    return <dc.Stack style={{alignItems:'center',justifyContent:'center',padding:24}}><dc.Text>Invalid recurrence rule.</dc.Text></dc.Stack>;
+    return <dc.Stack style={{alignItems:'center',justifyContent:'center',padding:24}}><div>Invalid recurrence rule.</div></dc.Stack>;
   }
 
   // Get last N scheduled dates (most recent first)

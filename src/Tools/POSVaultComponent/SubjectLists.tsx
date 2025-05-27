@@ -109,7 +109,7 @@ function comparePriority(a: string, b: string) {
 export const TimedList = ({ date, dc, app }: ListProps) => {
   const day = date || getTodayISO();
   const folders = getWorkInProgressFolders(app);
-  if (!folders.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</dc.Text>;
+  if (!folders.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</div>;
   const folderQuery = getExcludedFolderQuery(folders);
   const query = `@task and ${notCompletedOrCancelled}${folderQuery ? ` and ${folderQuery}` : ''} and $text.contains("${day}") and childof(@page and ${notArchivedOrHandled})`;
   const tasks = dc.useQuery(query);
@@ -130,7 +130,7 @@ export const TimedList = ({ date, dc, app }: ListProps) => {
   }
   // Sort by time (earliest first)
   const sorted = Object.values(fileToEarliest).sort((a, b) => a.time.localeCompare(b.time));
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No timed actions for this date.</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No timed actions for this date.</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(({ task, time }) => (
@@ -164,7 +164,7 @@ export const TimedList = ({ date, dc, app }: ListProps) => {
 export const DueList = ({ date, dc, app }: ListProps) => {
   const day = date || getTodayISO();
   const folders = getWorkInProgressFolders(app);
-  if (!folders.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</dc.Text>;
+  if (!folders.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</div>;
   const folderQuery = getExcludedFolderQuery(folders);
   const query = `@task and ${notCompletedOrCancelled}${folderQuery ? ` and ${folderQuery}` : ''} and $text.contains("${day}") and childof(@page and ${notArchivedOrHandled})`;
   const tasks = dc.useQuery(query);
@@ -179,7 +179,7 @@ export const DueList = ({ date, dc, app }: ListProps) => {
   }
   // Sort by priority (very high > high > normal > low > lowest)
   const sorted = Object.values(fileToBest).sort((a, b) => comparePriority(a.priority, b.priority));
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No due actions for this date.</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No due actions for this date.</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(({ task, priority }) => (
@@ -216,7 +216,7 @@ export const DueList = ({ date, dc, app }: ListProps) => {
 export const ScheduledList = ({ date, dc, app }: ListProps) => {
   const day = date || getTodayISO();
   const folders = getWorkInProgressFolders(app);
-  if (!folders.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</dc.Text>;
+  if (!folders.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</div>;
   const folderQuery = getExcludedFolderQuery(folders);
   const query = `@task and ${notCompletedOrCancelled}${folderQuery ? ` and ${folderQuery}` : ''} and $text.contains("${day}") and childof(@page and ${notArchivedOrHandled})`;
   const tasks = dc.useQuery(query);
@@ -235,7 +235,7 @@ export const ScheduledList = ({ date, dc, app }: ListProps) => {
   }
   // Sort by priority (very high > high > normal > low > lowest)
   const sorted = Object.values(fileToBest).sort((a, b) => comparePriority(a.priority, b.priority));
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No scheduled actions for this date.</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No scheduled actions for this date.</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(({ task, priority }) => (
@@ -272,7 +272,7 @@ export const ScheduledList = ({ date, dc, app }: ListProps) => {
 export const NextList = ({ date, dc, app }: ListProps) => {
   const day = date || getTodayISO();
   const folders = getWorkInProgressFolders(app);
-  if (!folders.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</dc.Text>;
+  if (!folders.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</div>;
   const folderQuery = getExcludedFolderQuery(folders);
   const query = `@task and ${notCompletedOrCancelled}${folderQuery ? ` and ${folderQuery}` : ''} and childof(@page and ${notArchivedOrHandled})`;
   const tasks = dc.useQuery(query);
@@ -339,7 +339,7 @@ export const NextList = ({ date, dc, app }: ListProps) => {
     }
   }
   // Render: future-due-only first, then others
-  if (!futureDuePages.length && !nextPages.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No next actions found.</dc.Text>;
+  if (!futureDuePages.length && !nextPages.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No next actions found.</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {futureDuePages.map(({ task, due }) => (
@@ -387,7 +387,7 @@ export const HandledList = ({ date, dc, app }: ListProps) => {
   const sorted = Object.entries(fileToTasks)
     .map(([file, tasks]) => ({ file, count: tasks.length }))
     .sort((a, b) => a.file.localeCompare(b.file));
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No handled subjects for this date.</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No handled subjects for this date.</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(({ file, count }) => (
@@ -427,7 +427,7 @@ interface FutureListProps {
 
 export const FutureList = ({ from, to, dc, app }: FutureListProps) => {
   const folders = getWorkInProgressFolders(app);
-  if (!folders.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</dc.Text>;
+  if (!folders.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</div>;
   const folderQuery = getExcludedFolderQuery(folders);
   const { start, end } = getDateRangeFromDurations(from, to);
   // Query all not completed/cancelled tasks in WIP folders
@@ -457,7 +457,7 @@ export const FutureList = ({ from, to, dc, app }: FutureListProps) => {
   // Sort by date, then by type priority (⏳ > 🛫)
   const typePriority = (type: string) => (type === 'scheduled' ? 0 : 1);
   const sorted = Object.values(fileToEarliest).sort((a, b) => a.date.localeCompare(b.date) || typePriority(a.type) - typePriority(b.type));
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No future actions in this range.</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No future actions in this range.</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(({ task, date, symbol, due }) => (
@@ -491,7 +491,7 @@ export const FutureList = ({ from, to, dc, app }: FutureListProps) => {
 export const LateList = ({ dc, app }: { dc: any, app: any }) => {
   const today = getTodayISO();
   const folders = getWorkInProgressFolders(app);
-  if (!folders.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</dc.Text>;
+  if (!folders.length) return <div style={{ textAlign: 'center', color: 'var(--text-warning)' }}>No work-in-progress folders found.</div>;
   const folderQuery = getExcludedFolderQuery(folders);
   const query = `@task and ${notCompletedOrCancelled}${folderQuery ? ` and ${folderQuery}` : ''} and childof(@page and ${notArchivedOrHandled})`;
   const tasks = dc.useQuery(query);
@@ -523,7 +523,7 @@ export const LateList = ({ dc, app }: { dc: any, app: any }) => {
   // Sort by date, then by type priority (📅 > ⏳)
   const typePriority = (type: string) => DATE_TYPES.findIndex(dt => dt.key === type);
   const sorted = Object.values(fileToEarliest).sort((a, b) => a.date.localeCompare(b.date) || typePriority(a.type) - typePriority(b.type));
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-success)' }}>No late actions!</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-success)' }}>No late actions!</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(({ task, date, symbol }) => (
@@ -697,7 +697,7 @@ export const ToProcessList = ({ dc, app }: { dc: any, app: any }) => {
       // Otherwise, alphabetical
       return a[0].localeCompare(b[0]);
     });
-  if (!sorted.length) return <dc.Text style={{ textAlign: 'center', color: 'var(--text-success)' }}>No pages to process!</dc.Text>;
+  if (!sorted.length) return <div style={{ textAlign: 'center', color: 'var(--text-success)' }}>No pages to process!</div>;
   return (
     <dc.Stack style={{ gap: '16px' }}>
       {sorted.map(([file, { category, info }]) => {

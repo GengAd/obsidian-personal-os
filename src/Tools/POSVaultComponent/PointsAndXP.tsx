@@ -53,7 +53,7 @@ export const TotalXP = ({ dc, app }: XPProps) => {
   const totalXP = allTasks.reduce((acc: number, task: any) => acc + calculateTaskPoints(task), 0);
   return (
     <dc.Stack style={{ alignItems: 'center', gap: '8px' }}>
-      <dc.Text style={{ fontSize: '2.2em', fontWeight: 700 }}>{totalXP}</dc.Text>
+      <div style={{ fontSize: '2.2em', fontWeight: 700 }}>{totalXP}</div>
     </dc.Stack>
   );
 };
@@ -66,7 +66,7 @@ export const CharacterLevel = ({ dc, app }: XPProps) => {
   const level = Math.floor(currentLevelBasedOnXp(totalXP, x, y));
   return (
     <dc.Stack style={{ alignItems: 'center', gap: '3px' }}>
-      <dc.Text style={{ fontSize: '0.95em', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '2px' }}>Level</dc.Text>
+      <div style={{ fontSize: '0.95em', color: 'var(--text-muted)', textAlign: 'center', marginBottom: '2px' }}>Level</div>
       <div
         style={{
           display: 'flex',
@@ -171,7 +171,7 @@ export const CurrentLevelXPBar = ({ dc, app }: XPProps) => {
           }
         `}
       </style>
-      <dc.Text style={{ fontSize: '0.95em', color: 'var(--text-muted)', marginTop: '-4px', textAlign: 'center', width: '100%' }}>{differencialXp} / {xpRequired} XP</dc.Text>
+      <div style={{ fontSize: '0.95em', color: 'var(--text-muted)', marginTop: '-4px', textAlign: 'center', width: '100%' }}>{differencialXp} / {xpRequired} XP</div>
     </dc.Stack>
   );
 };

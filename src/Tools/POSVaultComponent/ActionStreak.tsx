@@ -190,7 +190,7 @@ export const ActionStreak = ({ app, dc, file, filterText, N = 21 }: ActionStreak
   };
 
   return (
-    <dc.Group style={groupStyle}>
+    <div style={groupStyle}>
       {/* Streak Counter with Total */}
       <div style={cardStyle}>
         <div style={streakTotalRowStyle}>
@@ -266,6 +266,6 @@ export const ActionStreak = ({ app, dc, file, filterText, N = 21 }: ActionStreak
           ) : '—'}
         </div>
       </div>
-    </dc.Group>
+    </div>
   );
 };

@@ -49,9 +49,9 @@ export const ActivityOutline = ({ app, dc }: ActivityOutlineProps) => {
           borderRadius: '8px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
-          <dc.Text style={{ fontSize: '16px', fontWeight: '500', color: 'var(--text-error)' }}>
+          <div style={{ fontSize: '16px', fontWeight: '500', color: 'var(--text-error)' }}>
             No active file found. Please open a file to view activities.
-          </dc.Text>
+          </div>
         </div>
       </dc.Stack>
     );
@@ -231,7 +231,7 @@ export const ActivityOutline = ({ app, dc }: ActivityOutlineProps) => {
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0, flexWrap: 'wrap' }}>
                   {(slot.cardFile?.$frontmatter?.class?.raw) && (
-                    <dc.Text style={{
+                    <div style={{
                       fontSize: '14px',
                       color: idx === firstActionableIdx ? 'var(--text-on-accent)' : 'var(--text-muted)',
                       backgroundColor: idx === firstActionableIdx ? 'var(--interactive-accent)' : 'var(--background-primary)',
@@ -244,59 +244,55 @@ export const ActivityOutline = ({ app, dc }: ActivityOutlineProps) => {
                       boxShadow: 'none',
                     }}>
                       {getCleanClassDisplay(slot.cardFile.$frontmatter.class)}
-                    </dc.Text>
+                    </div>
                   )}
-                  <dc.Text style={{ fontSize: '16px', fontWeight: '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <div style={{ fontSize: '16px', fontWeight: '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {getCleanTitle(slot.cardName)}
-                  </dc.Text>
+                  </div>
                   {slot.tagline && (
-                    <dc.Text style={{ fontSize: '15px', color: 'var(--text-muted)', marginLeft: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1 }}>
+                    <div style={{ fontSize: '15px', color: 'var(--text-muted)', marginLeft: '12px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 1 }}>
                       {slot.tagline}
-                    </dc.Text>
+                    </div>
                   )}
                 </div>
                 {/* Only show the button for the first actionable slot */}
                 {idx === firstActionableIdx ? (
                   slot.cardType === 'activity' ? (
-                    <dc.Button
-                      onClick={() => handleOpenFile(slot.cardFile.$path)}
-                      style={{
-                        background: 'var(--interactive-accent)',
-                        color: 'var(--text-on-accent)',
-                        borderRadius: '6px',
-                        border: 'none',
-                        fontWeight: 'bold',
-                        fontSize: '16px',
-                        boxShadow: 'none',
-                        padding: '8px 16px',
-                        cursor: 'pointer',
-                        minWidth: '80px',
-                      }}
-                    >
+                    <div style={{
+                      background: 'var(--interactive-accent)',
+                      color: 'var(--text-on-accent)',
+                      borderRadius: '6px',
+                      border: 'none',
+                      fontWeight: 'bold',
+                      fontSize: '16px',
+                      boxShadow: 'none',
+                      padding: '8px 16px',
+                      cursor: 'pointer',
+                      minWidth: '80px',
+                    }}
+                    onClick={() => handleOpenFile(slot.cardFile.$path)}>
                       Continue activity
-                    </dc.Button>
+                    </div>
                   ) : (
-                    <dc.Button
-                      onClick={() => handleGenerateActivity(slot.templatePath)}
-                      style={{
-                        background: 'var(--interactive-accent)',
-                        color: 'var(--text-on-accent)',
-                        borderRadius: '6px',
-                        border: 'none',
-                        fontWeight: 'bold',
-                        fontSize: '16px',
-                        boxShadow: 'none',
-                        padding: '8px 16px',
-                        cursor: 'pointer',
-                        minWidth: '80px',
-                      }}
-                    >
+                    <div style={{
+                      background: 'var(--interactive-accent)',
+                      color: 'var(--text-on-accent)',
+                      borderRadius: '6px',
+                      border: 'none',
+                      fontWeight: 'bold',
+                      fontSize: '16px',
+                      boxShadow: 'none',
+                      padding: '8px 16px',
+                      cursor: 'pointer',
+                      minWidth: '80px',
+                    }}
+                    onClick={() => handleGenerateActivity(slot.templatePath)}>
                       Generate activity
-                    </dc.Button>
+                    </div>
                   )
                 ) : (
                   slot.isCompleted ? (
-                    <dc.Text style={{ color: 'var(--text-success)', fontWeight: 'bold', fontSize: '15px', marginLeft: '12px' }}>Completed</dc.Text>
+                    <div style={{ color: 'var(--text-success)', fontWeight: 'bold', fontSize: '15px', marginLeft: '12px' }}>Completed</div>
                   ) : null
                 )}
               </div>
@@ -321,9 +317,9 @@ export const ActivityOutline = ({ app, dc }: ActivityOutlineProps) => {
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
           marginTop: '12px'
         }}>
-          <dc.Text style={{ fontSize: '16px', fontWeight: '500', color: 'var(--text-success)' }}>
+          <div style={{ fontSize: '16px', fontWeight: '500', color: 'var(--text-success)' }}>
             All activities have been completed!
-          </dc.Text>
+          </div>
         </div>
       )}
     </dc.Stack>

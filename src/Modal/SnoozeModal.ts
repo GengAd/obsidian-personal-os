@@ -26,30 +26,26 @@ export default class SnoozeModal extends FuzzySuggestModal<SnoozeOptions> {
     onChooseItem = (item: SnoozeOptions, _: MouseEvent | KeyboardEvent): void  =>{
         if(!this.app.workspace.getActiveFile()) return;
         this.app.vault.process(this.app.workspace.getActiveFile()!, (content: string) => {
-            const taskRegex = /- \[[ ]\] (.*?)(?=\n|$)/g;
+            const taskRegex = /- \[[ ]\] (.*?)(?=\r?\n|$)/g;
             const dateRegex = /(🛫|⏳|📅)\s*(\d{4}-\d{2}-\d{2})/g;
             let newContent = content;
             let oldestDate = moment();
             let foundAnyDate = false;
-            for(const match of newContent.matchAll(taskRegex)){
+            const allTasks = [...newContent.matchAll(taskRegex)];
+            for(const match of allTasks){
                 const task = match[0];
-                console.log('Matched task:', task);
                 const dates = [...task.matchAll(dateRegex)];
                 if(dates && dates.length > 0) {
                     foundAnyDate = true;
                     for(const dateMatch of dates){
-                        const currentDate = dateMatch[0];
                         const dateStr = dateMatch[2];
-                        console.log('  Found date:', currentDate, 'parsed as', dateStr);
                         if(moment(dateStr).isBefore(oldestDate))
                             oldestDate = moment(dateStr);
                     }
-                } else {
-                    console.log('  No dates found in this task.');
                 }
             }
             if (!foundAnyDate) {
-                console.log('No dates found in any tasks. Snooze will not update any dates.');
+                console.log('[SnoozeModal] No dates found in any tasks. Snooze will not update any dates.');
             }
             let diff = moment().diff(oldestDate, 'days');
             const startDate = moment(oldestDate);

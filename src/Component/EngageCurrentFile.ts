@@ -44,6 +44,8 @@ export default class EngageCurrentFile{
                     this.setCurrentFile(this.listOfFilesNextDue);
                 }else if((this.listOfFilesNext = this.listOfChildFiles.where(isNotArchived).where(IsNextPage)).length > 0){
                     this.setCurrentFile(this.listOfFilesNext);
+                } else {
+                    // No due/scheduled/next files found among children.
                 }
             }else if(this.listOfFilesWTime.length > 1){
                     this.listOfFilesWTime.values.sort(sortTimes);
@@ -54,24 +56,10 @@ export default class EngageCurrentFile{
         }
         //  fallback to any child if nothing else matched
         if (!this.currentFile && this.listOfChildFiles.length > 0) {
-            this.setCurrentFile(this.listOfChildFiles);
+            this.currentFile = this.focus;
         }
         this.openCurrentFile();
     }
-    /*
-    setFocus = () =>{
-        this.currentFile = null;
-        if(this.dv.pages().where((p:any)=> p['Handled By']?.path == this.app.workspace.getActiveFile()?.path && !p.Archived).length > 0)
-            this.focus = this.dv.page(this.app.workspace.getActiveFile()!.path);
-        if(!this.focus && this.dv.page(this.app.workspace.getActiveFile()?.path)['Handled By'])
-            this.focus = this.dv.page(this.dv.page(this.app.workspace.getActiveFile()?.path)['Handled By'].path);
-        if(this.focus){
-            this.listOfChildFiles = this.dv.pages().where((p:any)=>p['Handled By']?.path == this.focus.file.path);   
-            this.currentFile = this.focus;
-        }
-    }
-        */
-    
     setFocus = () => {
         this.focus = null;
         this.currentFile = null;

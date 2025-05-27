@@ -36,7 +36,7 @@ export const CurrentMissionList = ({ app, dc }: CurrentMissionListProps) => {
 
   return (
     <dc.Stack style={{ width: "100%", padding: "20px", gap: "32px" }}>
-      <dc.Text
+      <div
         style={{
           fontSize: "28px",
           fontWeight: "bold",
@@ -45,7 +45,7 @@ export const CurrentMissionList = ({ app, dc }: CurrentMissionListProps) => {
         }}
       >
         Current Missions
-      </dc.Text>
+      </div>
 
       <div
         style={{
@@ -110,7 +110,7 @@ export const CurrentMissionList = ({ app, dc }: CurrentMissionListProps) => {
                   flexGrow: 1,
                 }}
               >
-                <dc.Text
+                <div
                   style={{
                     fontSize: "18px",
                     fontWeight: "bold",
@@ -119,7 +119,7 @@ export const CurrentMissionList = ({ app, dc }: CurrentMissionListProps) => {
                   }}
                 >
                   {mission.$name}
-                </dc.Text>
+                </div>
 
                 <MissionProgressBar app={app} dc={dc} missionFile={mission} />
 

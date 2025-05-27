@@ -132,7 +132,7 @@ export const TodayProgressBar = ({ app, dc, date }: TodayProgressBarProps) => {
 
   return (
     <dc.Stack style={{ gap: "16px" }}>
-      <dc.Text style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Today's progress</dc.Text>
+      <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: 4, textAlign: 'center' }}>Today's progress</div>
       <div
         style={{
           width: "100%",

@@ -20,10 +20,10 @@ export const ClassEntityList = ({ app, dc }: ClassEntityListProps) => {
   } catch {}
 
   if (!ontologyFolder) {
-    return <dc.Text style={{ color: 'var(--text-warning)', textAlign: 'center' }}>⚠️ Please select an Ontology Folder in the settings.</dc.Text>;
+    return <div style={{ color: 'var(--text-warning)', textAlign: 'center' }}>⚠️ Please select an Ontology Folder in the settings.</div>;
   }
   if (!current) {
-    return <dc.Text style={{ color: 'var(--text-warning)', textAlign: 'center' }}>⚠️ Could not load current file.</dc.Text>;
+    return <div style={{ color: 'var(--text-warning)', textAlign: 'center' }}>⚠️ Could not load current file.</div>;
   }
 
   // Query all ontology pages (classes)
@@ -185,7 +185,7 @@ export const ClassEntityList = ({ app, dc }: ClassEntityListProps) => {
     <dc.Stack style={{ gap: '16px', width: '100%' }}>
       <dc.Group>
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginBottom: 8, width: '100%' }}>
-          <dc.Text style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-normal)', flex: 1 }}>Class Entities</dc.Text>
+          <div style={{ fontSize: 22, fontWeight: 700, color: 'var(--text-normal)', flex: 1 }}>Class Entities</div>
         </div>
       </dc.Group>
       <dc.Group>
@@ -303,7 +303,7 @@ export const ClassEntityList = ({ app, dc }: ClassEntityListProps) => {
             </div>
           );
         }) : (
-          <dc.Text style={{ textAlign: 'center', padding: '1rem' }}>No results found.</dc.Text>
+          <div style={{ textAlign: 'center', padding: '1rem' }}>No results found.</div>
         )}
       </dc.Stack>
       <dc.Group>

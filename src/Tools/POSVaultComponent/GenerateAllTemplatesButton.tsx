@@ -120,16 +120,16 @@ export const GenerateAllTemplatesButton = ({ app, dc, buttonText = "Generate All
 
   if (noTemplates) {
     return (
-      <dc.Text style={{ marginTop: '12px', color: 'var(--text-warning)', fontWeight: 500 }}>
+      <div style={{ marginTop: '12px', color: 'var(--text-warning)', fontWeight: 500 }}>
         No templates found in the Templates section.
-      </dc.Text>
+      </div>
     );
   }
   if (allGenerated) {
     return (
-      <dc.Text style={{ marginTop: '12px', color: 'var(--text-success)', fontWeight: 500 }}>
+      <div style={{ marginTop: '12px', color: 'var(--text-success)', fontWeight: 500 }}>
         All templates have been generated
-      </dc.Text>
+      </div>
     );
   }
 
@@ -154,9 +154,9 @@ export const GenerateAllTemplatesButton = ({ app, dc, buttonText = "Generate All
         {loading ? 'Generating...' : buttonText}
       </dc.Button>
       {status && (
-        <dc.Text style={{ marginTop: '12px', color: status.startsWith('Created') ? 'var(--text-success)' : 'var(--text-error)', fontWeight: 500 }}>
+        <div style={{ marginTop: '12px', color: status.startsWith('Created') ? 'var(--text-success)' : 'var(--text-error)', fontWeight: 500 }}>
           {status}
-        </dc.Text>
+        </div>
       )}
     </div>
   );

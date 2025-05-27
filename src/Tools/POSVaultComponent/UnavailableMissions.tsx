@@ -175,15 +175,9 @@ export function UnavailableMissions({ app, dc, handleTemplateSelect }: Unavailab
           >
             ← Back
           </dc.Button>
-          <dc.Text style={{
-            fontSize: '24px',
-            fontWeight: 'bold',
-            color: 'var(--text-normal)',
-            flexGrow: 1,
-            textAlign: 'right'
-          }}>
+          <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--text-normal)', flexGrow: 1, textAlign: 'right' }}>
             {selectedTemplate?.$name}
-          </dc.Text>
+          </div>
         </dc.Group>
         {imageUrl && (
           <div style={{
@@ -207,24 +201,14 @@ export function UnavailableMissions({ app, dc, handleTemplateSelect }: Unavailab
           </div>
         )}
         <dc.Group style={{ gap: '12px' }}>
-          <dc.Text style={{
-            fontSize: '14px',
-            color: 'var(--text-muted)',
-            background: 'var(--background-secondary)',
-            padding: '6px 12px',
-            borderRadius: '4px'
-          }}>
+          <div style={{ fontSize: '14px', color: 'var(--text-muted)', background: 'var(--background-secondary)', padding: '6px 12px', borderRadius: '4px' }}>
             Difficulty: {formatDifficulty(selectedTemplate?.$frontmatter?.difficulty?.value)}
-          </dc.Text>
+          </div>
         </dc.Group>
         <dc.Stack style={{ gap: '8px' }}>
-          <dc.Text style={{
-            fontSize: '14px',
-            color: 'var(--text-muted)',
-            textAlign: 'center'
-          }}>
+          <div style={{ fontSize: '14px', color: 'var(--text-muted)', textAlign: 'center' }}>
             Unlock Progress
-          </dc.Text>
+          </div>
           <RequirementProgressBar app={app} dc={dc} file={template} />
         </dc.Stack>
         {selectedTemplate && selectedTemplate.$sections?.some((section: any) => section.$title?.toLowerCase() === 'requirements') && (
@@ -274,18 +258,18 @@ export function UnavailableMissions({ app, dc, handleTemplateSelect }: Unavailab
   if (!ready) {
     return (
       <dc.Stack>
-        <dc.Text style={{ color: "var(--text-warning)", textAlign: "center" }}>
+        <div style={{ color: "var(--text-warning)", textAlign: "center" }}>
           Loading mission folders...
-        </dc.Text>
+        </div>
       </dc.Stack>
     );
   }
   if (missionTemplateFolder && typeof missionTemplateFolder === "string" && missionTemplateFolder.length === 0) {
     return (
       <dc.Stack>
-        <dc.Text style={{ color: "var(--text-error)", textAlign: "center" }}>
+        <div style={{ color: "var(--text-error)", textAlign: "center" }}>
           No mission folders configured.
-        </dc.Text>
+        </div>
       </dc.Stack>
     );
   }
@@ -296,14 +280,14 @@ export function UnavailableMissions({ app, dc, handleTemplateSelect }: Unavailab
       padding: '20px',
       gap: '32px'
     }}>
-      <dc.Text style={{
+      <div style={{
         fontSize: '28px',
         fontWeight: 'bold',
         color: 'var(--text-normal)',
         textAlign: 'center'
       }}>
         Unavailable Missions
-      </dc.Text>
+      </div>
       {isDetailView ? (
         <DetailView />
       ) : (
@@ -343,22 +327,22 @@ export function UnavailableMissions({ app, dc, handleTemplateSelect }: Unavailab
                   gap: '12px',
                   flexGrow: 1
                 }}>
-                  <dc.Text style={{
+                  <div style={{
                     fontSize: '18px',
                     fontWeight: 'bold',
                     color: 'var(--text-normal)',
                     lineHeight: '1.3'
                   }}>
                     {template.$name}
-                  </dc.Text>
+                  </div>
                   <dc.Stack style={{ gap: '8px' }}>
-                    <dc.Text style={{
+                    <div style={{
                       fontSize: '12px',
                       color: 'var(--text-muted)',
                       textAlign: 'center'
                     }}>
                       Unlock Progress
-                    </dc.Text>
+                    </div>
                     <RequirementProgressBar app={app} dc={dc} file={template} style={{ height: '8px', margin: 0 }} />
                   </dc.Stack>
                 </div>

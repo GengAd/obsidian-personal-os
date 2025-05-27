@@ -66,7 +66,7 @@ export const BuffBar = ({ app, dc }: BuffAndDebuffBarProps) => {
         {renderedBuffs.length > 0 ? (
           renderedBuffs
         ) : (
-          <dc.Text>No buffs found</dc.Text>
+          <div>No buffs found</div>
         )}
       </div>
     </div>
@@ -132,7 +132,7 @@ export const DebuffBar = ({ app, dc }: BuffAndDebuffBarProps) => {
         {renderedDebuffs.length > 0 ? (
           renderedDebuffs
         ) : (
-          <dc.Text>No debuffs found</dc.Text>
+          <div>No debuffs found</div>
         )}
       </div>
     </div>

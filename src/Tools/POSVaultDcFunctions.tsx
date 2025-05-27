@@ -26,6 +26,9 @@ import { OntologyTreeViewer } from "src/Tools/POSVaultComponent/OntologyTree";
 import { ClassEntityList } from "src/Tools/POSVaultComponent/ClassEntityList";
 import { SubClassTree } from "src/Tools/POSVaultComponent/SubClassTree";
 import { MetaClassTree } from "src/Tools/POSVaultComponent/MetaClassTree";
+import { NextAction } from "src/Tools/POSVaultComponent/NextAction";
+import { HandlerActions } from "src/Tools/POSVaultComponent/HandlerActions";
+import { StrategicActivityImediatefocus } from "src/Tools/POSVaultComponent/StrategicActivityImediatefocus";
 
 
 export class POSVaultDcFunctions {
@@ -85,6 +88,11 @@ export class POSVaultDcFunctions {
     OntologyTreeViewer = OntologyTreeViewer;
     SubClassTree = SubClassTree;
     MetaClassTree = MetaClassTree;
+
+    // NextAction component for Datacore
+    NextAction = NextAction;
+    HandlerActions = HandlerActions;
+    StrategicActivityImediatefocus = StrategicActivityImediatefocus;
 }
 
 
